@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManageItemsActivity">
+
+    <TextView
+        android:id="@+id/manageItemsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="150dip"
+        android:layout_margin="16dip"
+        android:gravity="center"
+        android:text="Manage Items"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/addOrRemoveSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/manageItemsTextView"
+
+        />
+
+    <EditText
+        android:id="@+id/itemNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:hint="name of item"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
+
+    <EditText
+        android:id="@+id/itemPartNumberEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:hint="part number"
+        android:inputType="textAutoComplete"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/itemNameEditText"
+        app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:hint="quantity"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/itemPartNumberEditText"
+        app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
+
+
+    <Spinner
+        android:id="@+id/aisleSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toEndOf="@id/toShelfTextView"
+        app:layout_constraintTop_toBottomOf="@id/itemPartNumberEditText" />
+
+    <TextView
+        android:id="@+id/toShelfTextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="to shelf "
+        android:textSize="15sp"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemNameEditText" />
+
+    <Button
+        android:id="@+id/enterButton"
+        android:layout_width="180dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="72dp"
+        android:text="enter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toShelfTextView" />
+
+    <Button
+        android:id="@+id/returnToAdminMenuButton"
+        android:layout_width="180dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="12dp"
+        android:text="return to admin menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enterButton" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
