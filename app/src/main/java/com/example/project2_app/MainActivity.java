@@ -40,12 +40,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //starts with StoreActivity
+        /*
+
         loginStore();
 
         if(loggedStoreId == -1) {
             Intent intent = StoreActivity.storeIntentFactory(getApplicationContext());
             startActivity(intent);
         }
+
+         */
 
         repository = InventoryManagementRepository.getRepository(getApplication());
 
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginStore() {
-        
+
     }
 
 }
