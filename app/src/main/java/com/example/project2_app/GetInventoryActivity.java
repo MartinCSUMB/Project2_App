@@ -23,10 +23,10 @@ public class GetInventoryActivity extends AppCompatActivity {
         binding = ActivityGetInventoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.returnToAdminMenuFromInventoryButton.setOnClickListener(new View.OnClickListener() {
+        binding.returnToPostLoginMenuFromInventoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = AdminActivity.adminIntentFactory(getApplicationContext());
+                Intent intent = new Intent(GetInventoryActivity.this, PostLoginActivity.class);
                 startActivity(intent);
             }
         });

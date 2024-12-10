@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.example.project2_app.AdminActivity;
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
+import com.example.project2_app.database.entities.User;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -18,6 +19,8 @@ public class InventoryManagementRepository {
 
     private final ProductDAO productDAO;
     private final AisleDAO aisleDAO;
+
+    private final UserDAO userDAO;
     private LiveData<List<Product>> allProducts;
     private LiveData<List<Aisle>> allAisles;
     private static InventoryManagementRepository repository;
@@ -25,6 +28,7 @@ public class InventoryManagementRepository {
         InventoryManagementDatabase db  = InventoryManagementDatabase.getDatabase(application);
         productDAO = db.productDAO();
         aisleDAO = db.aisleDAO();
+        this.userDAO = db.userDAO();
         allProducts = productDAO.getAllProducts();
         allAisles = aisleDAO.getAllAisles();
         //this.storeDAO = db.storeDAO();
@@ -111,5 +115,12 @@ public class InventoryManagementRepository {
         }
         return null;
     }
+
+    public void insertUser(User... user){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{
+            userDAO.insert(user);
+        });
+    }
+
 
 }

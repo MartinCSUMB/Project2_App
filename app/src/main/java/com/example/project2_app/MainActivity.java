@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private int result;
 
     private Product product;
-
+    private String username = "";
+    private String password = "";
 
 
     public static Intent mainActivityIntentFactory(Context context) {
@@ -43,11 +44,35 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        binding.helloButton.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = AdminActivity.adminIntentFactory(getApplicationContext());
-                startActivity(intent);
+
+                getInformationFromDisplay();
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Check user credentials in the database
+                else{
+                    boolean isValidUser= repository.validateUser(username, password);
+
+                        if (isValidUser) {
+                            // Navigate to PostLoginActivity
+                            Intent intent = new Intent(MainActivity.this, PostLoginActivity.class);
+                            intent.putExtra("username", username);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    public void onFailure(Throwable t) {
+                        Toast.makeText(MainActivity.this, "Login failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -61,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+    }
+    private void getInformationFromDisplay(){
+        username = binding.usernameEditText.getText().toString().trim();
+        password = binding.passwordEditText.getText().toString().trim();
 
     }
 

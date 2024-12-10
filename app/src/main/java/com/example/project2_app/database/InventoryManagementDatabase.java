@@ -12,13 +12,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.project2_app.AdminActivity;
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
+import com.example.project2_app.database.entities.User;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 
-@Database(entities = {Product.class, Aisle.class}, version = 1, exportSchema = false)
+@Database(entities = {Product.class, Aisle.class, User.class}, version = 2, exportSchema = false)
 public abstract class InventoryManagementDatabase extends RoomDatabase {
+
+    public static final Object USER_TABLE = "userTable";
 
     public abstract ProductDAO productDAO();
     public abstract AisleDAO aisleDAO();
@@ -54,6 +58,14 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i(AdminActivity.TAG, "DATABASE CREATED");
             databaseWriteExecutor.execute(()-> {
+                UserDAO udao = INSTANCE.userDAO();
+                udao.deleteAll();
+                User admin = new User("admin1", "admin1");
+                admin.setAdmin(true);
+                udao.insert(admin);
+                User testUser1 = new User("testuser1", "testuser1");
+                udao.insert(testUser1);
+
                 ProductDAO pdao = INSTANCE.productDAO();
                 pdao.deleteAll();
                 Product testProduct = new Product(1, "test", 1.0, 1234);
@@ -69,4 +81,5 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
     };
 
 
+    public abstract UserDAO userDAO();
 }
