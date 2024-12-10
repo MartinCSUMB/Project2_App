@@ -34,5 +34,15 @@ public interface ProductDAO {
     @Query("UPDATE productTable SET cost=:cost WHERE productId = :productId")
     void updateCost (int productId, double cost);
 
+    @Query("UPDATE productTable SET count=:count WHERE name = :name")
+    void updateCountByName (String name, int count);
+
+    @Query("SELECT COUNT(name) FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name")
+    int getCountOfMatchingProductNames(String name);
+
+
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name")
+    Product getProductByNameFuture(String name);
+
 
 }

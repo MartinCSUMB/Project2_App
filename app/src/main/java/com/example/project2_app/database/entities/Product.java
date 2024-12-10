@@ -23,11 +23,12 @@ public class Product {
 
     private int count;
 
-    public Product(int aisleId, String name, double cost, int partNumber){
+    public Product(int aisleId, String name, double cost, int partNumber, int count){
         this.aisleId = aisleId;
         this.name = name;
         this.cost = cost;
         this.partNumber = partNumber;
+        this.count = count;
     }
 
     @Override
