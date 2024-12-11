@@ -19,7 +19,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
     private InventoryManagementRepository repository;
 
     private int id;
