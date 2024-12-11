@@ -55,21 +55,22 @@ public class GetInventoryActivity extends AppCompatActivity {
         List<Product> productsOnAisle;
 
         if(allAisles.isEmpty()){
-            binding.allInventoryTextView.setText("No items in iinventory");
+            binding.allInventoryTextView.setText("No items in inventory. womp womp :(");
         }
-        StringBuilder sb = new StringBuilder();
-        for(Aisle aisle: allAisles){
-            sb.append("Aisle: ").append(aisle.getName()).append(":").append('\n');
-            productsOnAisle = repository.getProductListByAisleId(aisle.getAisleId());
-            for (Product product: productsOnAisle){
-                sb.append("  Product: ").append(product.getName()).append(" (P/N: ").
-                        append(product.getPartNumber()).append(")").append('\n').append("  Price: ").append(product.getCost()).
-                        append(" Quantity: ").append(product.getCount()).append('\n').append('\n');
+        else {
+            StringBuilder sb = new StringBuilder();
+            for (Aisle aisle : allAisles) {
+                sb.append("Aisle: ").append(aisle.getName()).append(":").append('\n');
+                productsOnAisle = repository.getProductListByAisleId(aisle.getAisleId());
+                for (Product product : productsOnAisle) {
+                    sb.append("  Product: ").append(product.getName()).append(" (P/N: ").
+                            append(product.getPartNumber()).append(")").append('\n').append("  Price: ").append(product.getCost()).
+                            append(" Quantity: ").append(product.getCount()).append('\n').append('\n');
+                }
+
+
             }
-
-
-
+            binding.allInventoryTextView.setText(sb.toString());
         }
-        binding.allInventoryTextView.setText(sb.toString());
     }
 }

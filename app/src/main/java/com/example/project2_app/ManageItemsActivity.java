@@ -132,12 +132,20 @@ public class ManageItemsActivity extends AppCompatActivity {
     }
 
     private void insertProductRecord(){
-        aisle = repository.getAisleByNameFuture(mAisleName);
-        if(mAction.equals("add")){
-            addProductToDB(mName, aisle);
+        if(mAisleName.isEmpty()){
+            Toast.makeText(this, "add aisles first then add items!", Toast.LENGTH_SHORT).show();
         }
-        else{
-            removeProductFromDB(mName,aisle);
+        else if(mName.isEmpty() || mQuantity==0){
+            Toast.makeText(this, "make sure there is at least a name and quantity are filled",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else {
+            aisle = repository.getAisleByNameFuture(mAisleName);
+            if (mAction.equals("add")) {
+                addProductToDB(mName, aisle);
+            } else {
+                removeProductFromDB(mName, aisle);
+            }
         }
     }
 
@@ -158,12 +166,19 @@ public class ManageItemsActivity extends AppCompatActivity {
 
     private void addProductToDB(String name, Aisle aisle){
         product = repository.getProductByNameFuture(name);
-        if(product!=null){
+        //product name already exists, update the product info and increment the quantity as specified by user input
+        if(product!=null ){
             repository.updateCountByName(mName,product.getCount() + mQuantity);
+            repository.updatePartNumberById(product.getProductId(), mPartNumber);
+            repository.updateProductAisleIdById(product.getProductId(), aisle.getAisleId());
+            repository.updateProductCost(product.getProductId(), mCost);
+            Toast.makeText(this, "updated product information", Toast.LENGTH_SHORT).show();
         }
+        //else create new product and insert into db
         else{
             Product productToAdd = new Product(aisle.getAisleId(), mName, mCost, mPartNumber, mQuantity);
             repository.insertProduct(productToAdd);
+            Toast.makeText(this, "added new item to aisle", Toast.LENGTH_SHORT).show();
         }
     }
 

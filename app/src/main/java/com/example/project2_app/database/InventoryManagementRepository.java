@@ -97,6 +97,16 @@ public class InventoryManagementRepository {
             productDAO.updateCost(productId, cost);
         });
     }
+    public void  updatePartNumberById(int productId, int partNumber){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.updatePartNumberById(productId, partNumber);
+        });
+    }
+    public void  updateProductAisleIdById(int productId, int aisleID){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.updateProductAisleIdById(productId, aisleID);
+        });
+    }
 
     public void updateCountByName(String name, int count){
         InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{

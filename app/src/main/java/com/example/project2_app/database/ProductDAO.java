@@ -34,6 +34,10 @@ public interface ProductDAO {
     void updateCount (int productId, int count);
     @Query("UPDATE productTable SET cost=:cost WHERE productId = :productId")
     void updateCost (int productId, double cost);
+    @Query("UPDATE productTable SET partNumber=:partNumber WHERE productId = :productId")
+    void updatePartNumberById (int productId, int partNumber);
+    @Query("UPDATE productTable SET aisleId=:aisleId WHERE productId = :productId")
+    void updateProductAisleIdById(int productId, int aisleId);
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE isBookmarked = 1")
     LiveData<List<Product>> getBookmarkedItems();
 
