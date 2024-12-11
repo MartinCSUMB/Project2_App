@@ -27,4 +27,8 @@ public interface UserDAO {
 
     @Query("DELETE FROM " + InventoryManagementDatabase.USER_TABLE)
     void deleteAll();
+
+    @Query("SELECT * FROM " + InventoryManagementDatabase.USER_TABLE + " WHERE username = :username LIMIT 1")
+    User getUserByUsername(String username);
+
 }
