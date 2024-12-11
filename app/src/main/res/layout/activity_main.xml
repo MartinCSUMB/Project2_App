@@ -11,14 +11,39 @@
         android:id="@+id/hello"
         android:layout_width="228dp"
         android:layout_height="105dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="25dp"
         android:gravity="center"
-        android:text="Welcome to \nThe Inventory Manager!"
+        android:text="Stockify"
+        android:textSize="60sp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/logoImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hello"
+        app:layout_constraintEnd_toStartOf="@id/hello"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hello"
+        app:srcCompat="@drawable/stockifylogo" />
+
+
+    <TextView
+        android:id="@+id/subheadingTextView"
+        android:layout_width="228dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="An Inventory Manager"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@id/hello" />
 
     <TextView
         android:id="@+id/usernameLabelTextView"
@@ -88,6 +113,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
