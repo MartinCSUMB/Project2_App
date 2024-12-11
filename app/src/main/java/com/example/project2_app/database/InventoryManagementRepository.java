@@ -130,8 +130,8 @@ public class InventoryManagementRepository {
 
     //bookmark methods
 
-    public LiveData<List<Product>> getBookmarkedProducts() {
-        return productDAO.getBookmarkedProducts();
+    public LiveData<List<Product>> getBookmarkedItems() {
+        return productDAO.getBookmarkedItems();
     }
 
 }
