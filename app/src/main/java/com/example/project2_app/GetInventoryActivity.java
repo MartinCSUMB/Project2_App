@@ -23,6 +23,10 @@ public class GetInventoryActivity extends AppCompatActivity {
         binding = ActivityGetInventoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        String itemName = intent.getStringExtra("productKey");
+        String itemAisle = intent.getStringExtra("aisleKey");
+
         binding.returnToAdminMenuFromInventoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

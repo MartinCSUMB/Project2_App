@@ -3,6 +3,7 @@ package com.example.project2_app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,13 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findSearch();
+            }
+        });
     }
 
     private void findSearch(){
@@ -42,7 +50,10 @@ public class SearchActivity extends AppCompatActivity {
                     LiveData<Product> productObserver = repository.getProductByAisleID(aisle.getAisleId());
                     productObserver.observe(this, product -> {
                         if(product != null){
-
+                            Intent intent = GetInventoryActivity.getInventoryIntentFactory(getApplicationContext());
+                            intent.putExtra("productKey",itemName);
+                            intent.putExtra("aisleKey",itemAisle);
+                            startActivity(intent);
                         }
                         else {
                             toastMaker("Product not found");
@@ -59,7 +70,9 @@ public class SearchActivity extends AppCompatActivity {
             LiveData<Product> productObserver = repository.getProductByName(itemName);
             productObserver.observe(this, product -> {
                 if (product != null) {
-
+                    Intent intent = GetInventoryActivity.getInventoryIntentFactory(getApplicationContext());
+                    intent.putExtra("productKey",itemName);
+                    startActivity(intent);
                 } else {
                     toastMaker("Product not found");
                 }
@@ -72,7 +85,9 @@ public class SearchActivity extends AppCompatActivity {
                 if (aisle != null) {
                     LiveData<Product> productObserver = repository.getProductByAisleID(aisle.getAisleId());
                     productObserver.observe(this, product -> {
-
+                        Intent intent = GetInventoryActivity.getInventoryIntentFactory(getApplicationContext());
+                        intent.putExtra("aisleKey",itemAisle);
+                        startActivity(intent);
                     });
                 } else {
                     toastMaker("Aisle not found");
