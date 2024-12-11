@@ -167,7 +167,7 @@ public class ManageItemsActivity extends AppCompatActivity {
     private void addProductToDB(String name, Aisle aisle){
         product = repository.getProductByNameFuture(name);
         //product name already exists, update the product info and increment the quantity as specified by user input
-        if(product!=null ){
+        if(product!=null){
             repository.updateCountByName(mName,product.getCount() + mQuantity);
             repository.updatePartNumberById(product.getProductId(), mPartNumber);
             repository.updateProductAisleIdById(product.getProductId(), aisle.getAisleId());
