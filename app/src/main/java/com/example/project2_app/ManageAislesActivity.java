@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.project2_app.database.InventoryManagementRepository;
 import com.example.project2_app.database.entities.Aisle;
+import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.databinding.ActivityManageShelvesBinding;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class ManageAislesActivity extends AppCompatActivity {
     String mShelvesRemove = "";
 
     private List<Aisle> allAisles;
+
+    private List<Product> allProducts;
 
     private InventoryManagementRepository repository;
 
@@ -101,6 +104,7 @@ public class ManageAislesActivity extends AppCompatActivity {
             Toast.makeText(this, "no more aisles to remove", Toast.LENGTH_SHORT).show();
         }
         else{
+            allProducts = repository.getAllProductsFuture();
             mShelvesRemove = binding.shelfNameSpinner.getSelectedItem().toString();
             Aisle aisleDelete = null;
             for(Aisle aisle : allAisles){
@@ -110,6 +114,12 @@ public class ManageAislesActivity extends AppCompatActivity {
             }
             if(aisleDelete!=null){
                 repository.deleteAisle(aisleDelete);
+                Toast.makeText(this, "aisle deleted and the items in it", Toast.LENGTH_SHORT).show();
+                for(Product product: allProducts){
+                    if (product.getAisleId()==aisleDelete.getAisleId()){
+                        repository.deleteProduct(product);
+                    }
+                }
             }
         }
     }

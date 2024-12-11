@@ -61,6 +61,22 @@ public class InventoryManagementRepository {
             productDAO.updateIsBookMarkedByName(isBookMarked,name);
         });
     }
+    public List<Product> getAllProductsFuture() {
+        Future<ArrayList<Product>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Product>>() {
+                    @Override
+                    public ArrayList<Product> call() throws Exception {
+                        return (ArrayList<Product>) productDAO.getAllProductsFuture();
+                    }
+                });
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public LiveData<List<Product>> getAllProducts(){
         return allProducts;
     }
