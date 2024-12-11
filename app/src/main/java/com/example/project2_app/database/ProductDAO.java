@@ -33,6 +33,8 @@ public interface ProductDAO {
     void updateCount (int productId, int count);
     @Query("UPDATE productTable SET cost=:cost WHERE productId = :productId")
     void updateCost (int productId, double cost);
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE isBookmarked = 1")
+    LiveData<List<Product>> getBookmarkedProducts();
 
 
 }
