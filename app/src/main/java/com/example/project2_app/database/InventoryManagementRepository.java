@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.project2_app.AdminActivity;
 import com.example.project2_app.database.entities.Aisle;
-import com.example.project2_app.database.entities.AisleWithProducts;
 import com.example.project2_app.database.entities.Product;
+import com.example.project2_app.database.entities.Store;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +20,24 @@ public class InventoryManagementRepository {
 
     private final ProductDAO productDAO;
     private final AisleDAO aisleDAO;
+    private StoreDAO storeDAO;
     private LiveData<List<Product>> allProducts;
     private LiveData<List<Aisle>> allAisles;
+    private List<Store> allStores;
     private ArrayList<Aisle> allAisleArrayList;
     private static InventoryManagementRepository repository;
-
     private InventoryManagementRepository(Application application){
         InventoryManagementDatabase db  = InventoryManagementDatabase.getDatabase(application);
         productDAO = db.productDAO();
         aisleDAO = db.aisleDAO();
+        storeDAO = db.storeDAO();
+
         allProducts = productDAO.getAllProducts();
 
         this.allAisleArrayList = (ArrayList<Aisle>) this.aisleDAO.getAllRecords();
 
         allAisles = aisleDAO.getAllAisles();
+        allStores = storeDAO.getAllStores();
     }
 
     //product methods
@@ -152,11 +156,6 @@ public class InventoryManagementRepository {
         return aisleDAO.getAisleById(aisleId);
     }
 
-    public LiveData<List<AisleWithProducts>> getAisleWithProducts(){
-        return aisleDAO.getAisleWithProducts();
-    }
-
-
     public Aisle getAisleByNameFuture(String name) {
         Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
                 new Callable<Aisle>(){
@@ -190,6 +189,23 @@ public class InventoryManagementRepository {
             Log.d(AdminActivity.TAG, "Problem with repo, thread error");
         }
         return null;
+    }
+
+    //Store Methods
+    public void insertStore(Store... store){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{
+            storeDAO.insert(store);
+        });
+    }
+
+    public List<Store> getAllStores(){
+        return allStores;
+    }
+
+    //bookmark methods
+
+    public LiveData<List<Product>> getBookmarkedItems() {
+        return productDAO.getBookmarkedItems();
     }
 
 }

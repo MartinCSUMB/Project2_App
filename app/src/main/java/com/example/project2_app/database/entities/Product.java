@@ -23,15 +23,22 @@ public class Product {
 
     private int count;
 
-    private boolean isBookMarked;
+    private boolean isBookmarked;
 
-    public Product(int aisleId, String name, double cost, int partNumber, int count){
+    public Product(int aisleId, String name, double cost, int partNumber){
         this.aisleId = aisleId;
         this.name = name;
         this.cost = cost;
         this.partNumber = partNumber;
-        this.count = count;
-        this.isBookMarked=false;
+        this.isBookmarked = false;
+    }
+
+    public boolean isBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        isBookmarked = bookmarked;
     }
 
     @Override
@@ -45,14 +52,6 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(productId, name, cost, partNumber);
-    }
-
-    public boolean isBookMarked() {
-        return isBookMarked;
-    }
-
-    public void setBookMarked(boolean bookMarked) {
-        isBookMarked = bookMarked;
     }
 
     public int getProductId() {
@@ -101,6 +100,4 @@ public class Product {
     public void setCount(int count) {
         this.count = count;
     }
-
-
 }

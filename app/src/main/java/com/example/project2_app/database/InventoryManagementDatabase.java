@@ -12,18 +12,22 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.project2_app.AdminActivity;
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
+import com.example.project2_app.database.entities.Store;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 
-@Database(entities = {Product.class, Aisle.class}, version = 1, exportSchema = false)
+@Database(entities = {Product.class, Aisle.class, Store.class}, version = 1, exportSchema = false)
 public abstract class InventoryManagementDatabase extends RoomDatabase {
 
     public abstract ProductDAO productDAO();
     public abstract AisleDAO aisleDAO();
+    public abstract StoreDAO storeDAO();
     public static final String PRODUCT_TABLE = "productTable";
     public static final String AISLE_TABLE = "aisleTable";
+    public static final String STORE_TABLE = "storeTable";
     private final static String DATABASE_NAME = "InventoryManagementDatabase";
     private static volatile InventoryManagementDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -58,12 +62,22 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
                 pdao.deleteAll();
                 Product testProduct = new Product(1, "test", 1.0, 1234, 1);
                 pdao.insert(testProduct);
+                Product testProduct2 = new Product(1,"toiler paper", 5.00, 2342990);
+                pdao.insert(testProduct2);
                 AisleDAO adao = INSTANCE.aisleDAO();
                 Aisle testAisle = new Aisle("bathroom");
                 adao.insert(testAisle);
                 Product testProduct2 = new Product(1,"toiler paper", 5.00, 2342990, 2);
                 pdao.insert(testProduct2);
 
+
+                StoreDAO sDao = INSTANCE.storeDAO();
+                Store store1 = new Store("College Ave");
+                sDao.insert(store1);
+                Store store2 = new Store("Murphy Canyon Rd");
+                sDao.insert(store2);
+                Store store3 = new Store("Dennery Rd");
+                sDao.insert(store3);
 
             });
         }
