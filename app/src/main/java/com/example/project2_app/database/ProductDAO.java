@@ -36,5 +36,16 @@ public interface ProductDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE isBookmarked = 1")
     LiveData<List<Product>> getBookmarkedItems();
 
+    @Query("UPDATE productTable SET count=:count WHERE name = :name")
+    void updateCountByName (String name, int count);
+
+    @Query("SELECT COUNT(name) FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name")
+    int getCountOfMatchingProductNames(String name);
+
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name")
+    Product getProductByNameFuture(String name);
+
+    @Query("UPDATE productTable SET isBookMarked=:isBookMarked WHERE name = :name")
+    void updateIsBookMarkedByName(boolean isBookMarked, String name);
 
 }

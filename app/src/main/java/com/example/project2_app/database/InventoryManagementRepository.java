@@ -10,6 +10,7 @@ import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.Store;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +24,7 @@ public class InventoryManagementRepository {
     private LiveData<List<Product>> allProducts;
     private LiveData<List<Aisle>> allAisles;
     private List<Store> allStores;
+    private ArrayList<Aisle> allAisleArrayList;
     private static InventoryManagementRepository repository;
     private InventoryManagementRepository(Application application){
         InventoryManagementDatabase db  = InventoryManagementDatabase.getDatabase(application);
@@ -31,11 +33,19 @@ public class InventoryManagementRepository {
         storeDAO = db.storeDAO();
 
         allProducts = productDAO.getAllProducts();
+
+        this.allAisleArrayList = (ArrayList<Aisle>) this.aisleDAO.getAllRecords();
+
         allAisles = aisleDAO.getAllAisles();
         allStores = storeDAO.getAllStores();
     }
 
     //product methods
+    public void updateIsBookMarkedByName(boolean isBookMarked, String name){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{
+            productDAO.updateIsBookMarkedByName(isBookMarked,name);
+        });
+    }
     public LiveData<List<Product>> getAllProducts(){
         return allProducts;
     }
@@ -73,6 +83,38 @@ public class InventoryManagementRepository {
         });
     }
 
+    public void updateCountByName(String name, int count){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{
+            productDAO.updateCountByName(name, count);
+        });
+    }
+
+    public int getCountOfMatchingProductNames(String name){
+       return productDAO.getCountOfMatchingProductNames(name);
+    }
+
+    public void deleteProduct(Product product){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.delete(product);
+        });
+    }
+
+    public Product getProductByNameFuture(String name) {
+        Future<Product> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Product>(){
+                    @Override
+                    public Product call() throws Exception{
+                        return productDAO.getProductByNameFuture(name) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
     //Aisle methods
     public void insertAisle(Aisle aisle){
         InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{
@@ -90,12 +132,44 @@ public class InventoryManagementRepository {
         return allAisles;
     }
 
+    public ArrayList<Aisle> getAllAislesFuture() {
+        Future<ArrayList<Aisle>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Aisle>>() {
+                    @Override
+                    public ArrayList<Aisle> call() throws Exception {
+                        return (ArrayList<Aisle>) aisleDAO.getAllRecords();
+                    }
+                });
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public LiveData<Aisle> getAisleByName(String name){
         return aisleDAO.getAisleByName(name);
     }
 
     public LiveData<Aisle> getAisleById(int aisleId){
         return aisleDAO.getAisleById(aisleId);
+    }
+
+    public Aisle getAisleByNameFuture(String name) {
+        Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Aisle>(){
+                    @Override
+                    public Aisle call() throws Exception{
+                        return aisleDAO.getAisleByNameFuture(name) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
     }
 
     public static InventoryManagementRepository getRepository(Application application) {
