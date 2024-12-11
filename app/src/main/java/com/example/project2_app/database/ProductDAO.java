@@ -40,9 +40,14 @@ public interface ProductDAO {
     @Query("SELECT COUNT(name) FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name")
     int getCountOfMatchingProductNames(String name);
 
-
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name")
     Product getProductByNameFuture(String name);
+
+    @Query("UPDATE productTable SET isBookMarked=:isBookMarked WHERE name = :name")
+    void updateIsBookMarkedByName(boolean isBookMarked, String name);
+
+
+
 
 
 }

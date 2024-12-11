@@ -30,11 +30,18 @@ public class InventoryManagementRepository {
         productDAO = db.productDAO();
         aisleDAO = db.aisleDAO();
         allProducts = productDAO.getAllProducts();
+
         this.allAisleArrayList = (ArrayList<Aisle>) this.aisleDAO.getAllRecords();
-        //this.storeDAO = db.storeDAO();
+
+        allAisles = aisleDAO.getAllAisles();
     }
 
     //product methods
+    public void updateIsBookMarkedByName(boolean isBookMarked, String name){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() ->{
+            productDAO.updateIsBookMarkedByName(isBookMarked,name);
+        });
+    }
     public LiveData<List<Product>> getAllProducts(){
         return allProducts;
     }
@@ -88,7 +95,21 @@ public class InventoryManagementRepository {
         });
     }
 
-
+    public Product getProductByNameFuture(String name) {
+        Future<Product> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Product>(){
+                    @Override
+                    public Product call() throws Exception{
+                        return productDAO.getProductByNameFuture(name) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
 
     //Aisle methods
     public void insertAisle(Aisle aisle){
@@ -135,21 +156,6 @@ public class InventoryManagementRepository {
         return aisleDAO.getAisleWithProducts();
     }
 
-    public Product getProductByNameFuture(String name) {
-        Future<Product> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
-                new Callable<Product>(){
-                    @Override
-                    public Product call() throws Exception{
-                        return productDAO.getProductByNameFuture(name) ;
-                    }                                                                                                                        }
-        );
-        try{
-            return future.get();
-        }catch (InterruptedException | ExecutionException e){
-            Log.d(AdminActivity.TAG, "Problem getting name out of");
-        }
-        return null;
-    }
 
     public Aisle getAisleByNameFuture(String name) {
         Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
