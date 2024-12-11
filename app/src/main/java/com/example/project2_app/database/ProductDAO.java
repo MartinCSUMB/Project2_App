@@ -9,6 +9,7 @@ import androidx.room.Query;
 
 import com.example.project2_app.database.entities.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -47,5 +48,8 @@ public interface ProductDAO {
 
     @Query("UPDATE productTable SET isBookMarked=:isBookMarked WHERE name = :name")
     void updateIsBookMarkedByName(boolean isBookMarked, String name);
+
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE aisleId = :aisleId ORDER BY name DESC")
+    List<Product> getProductListByAisleId(int aisleId);
 
 }
