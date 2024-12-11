@@ -9,21 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.project2_app.database.InventoryManagementDatabase;
 import com.example.project2_app.database.InventoryManagementRepository;
-import com.example.project2_app.database.StoreDAO;
 import com.example.project2_app.database.entities.Store;
 import com.example.project2_app.databinding.ActivityStoreBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class StoreActivity extends AppCompatActivity {
 

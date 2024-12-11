@@ -6,7 +6,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Transaction;
+
+import androidx.room.Update;
+
 
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
@@ -17,6 +19,9 @@ import java.util.List;
 public interface AisleDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Aisle... aisle);
+
+    @Update
+    void update(Aisle aisle);
 
     @Delete
     void delete(Aisle aisle);
