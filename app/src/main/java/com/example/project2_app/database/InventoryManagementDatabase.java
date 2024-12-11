@@ -28,6 +28,7 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
     public static final String PRODUCT_TABLE = "productTable";
     public static final String AISLE_TABLE = "aisleTable";
     public static final String STORE_TABLE = "storeTable";
+    public static final String USER_TABLE = "userTable";
     private final static String DATABASE_NAME = "InventoryManagementDatabase";
     private static volatile InventoryManagementDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
