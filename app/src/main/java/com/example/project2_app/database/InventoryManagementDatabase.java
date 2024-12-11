@@ -13,21 +13,24 @@ import com.example.project2_app.AdminActivity;
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.Store;
+import com.example.project2_app.database.entities.User;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 
-@Database(entities = {Product.class, Aisle.class, Store.class}, version = 1, exportSchema = false)
+@Database(entities = {Product.class, Aisle.class, Store.class, User.class}, version = 1, exportSchema = false)
 public abstract class InventoryManagementDatabase extends RoomDatabase {
 
     public abstract ProductDAO productDAO();
     public abstract AisleDAO aisleDAO();
     public abstract StoreDAO storeDAO();
+    public abstract UserDAO UserDAO();
     public static final String PRODUCT_TABLE = "productTable";
     public static final String AISLE_TABLE = "aisleTable";
     public static final String STORE_TABLE = "storeTable";
+    public static final String USER_TABLE = "userTable";
     private final static String DATABASE_NAME = "InventoryManagementDatabase";
     private static volatile InventoryManagementDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

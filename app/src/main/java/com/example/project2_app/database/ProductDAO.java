@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.project2_app.database.entities.Product;
 
@@ -15,6 +16,10 @@ import java.util.List;
 public interface ProductDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Product... product);
+
+    @Update
+    void update(Product product);
+
     @Delete
     void delete(Product product);
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " ORDER BY name ASC")
@@ -33,6 +38,8 @@ public interface ProductDAO {
     void updateCount (int productId, int count);
     @Query("UPDATE productTable SET cost=:cost WHERE productId = :productId")
     void updateCost (int productId, double cost);
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE isBookmarked = 1")
+    LiveData<List<Product>> getBookmarkedItems();
 
 
 }

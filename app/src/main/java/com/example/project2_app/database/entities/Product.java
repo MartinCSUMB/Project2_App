@@ -23,11 +23,22 @@ public class Product {
 
     private int count;
 
+    private boolean isBookmarked;
+
     public Product(int aisleId, String name, double cost, int partNumber){
         this.aisleId = aisleId;
         this.name = name;
         this.cost = cost;
         this.partNumber = partNumber;
+        this.isBookmarked = false;
+    }
+
+    public boolean isBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        isBookmarked = bookmarked;
     }
 
     @Override
