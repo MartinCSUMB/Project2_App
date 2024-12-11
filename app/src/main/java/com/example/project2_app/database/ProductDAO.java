@@ -48,8 +48,4 @@ public interface ProductDAO {
     @Query("UPDATE productTable SET isBookMarked=:isBookMarked WHERE name = :name")
     void updateIsBookMarkedByName(boolean isBookMarked, String name);
 
-
-
-
-
 }

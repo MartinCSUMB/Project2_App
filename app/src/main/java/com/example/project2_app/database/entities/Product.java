@@ -25,11 +25,12 @@ public class Product {
 
     private boolean isBookmarked;
 
-    public Product(int aisleId, String name, double cost, int partNumber){
+    public Product(int aisleId, String name, double cost, int partNumber, int count){
         this.aisleId = aisleId;
         this.name = name;
         this.cost = cost;
         this.partNumber = partNumber;
+        this.count = count;
         this.isBookmarked = false;
     }
 

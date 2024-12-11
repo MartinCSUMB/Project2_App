@@ -21,7 +21,7 @@
         android:layout_width="300dp"
         android:id="@+id/helloButton"
         android:layout_height="100dp"
-        android:text="hello"
+        android:text="admin"
         app:layout_constraintTop_toBottomOf="@id/hello"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

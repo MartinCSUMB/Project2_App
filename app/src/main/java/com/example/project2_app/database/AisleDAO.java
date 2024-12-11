@@ -9,7 +9,6 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.example.project2_app.database.entities.Aisle;
-import com.example.project2_app.database.entities.AisleWithProducts;
 
 import java.util.List;
 
@@ -33,9 +32,6 @@ public interface AisleDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " WHERE aisleId = :aisleId")
     LiveData<Aisle> getAisleById(int aisleId);
 
-    @Transaction
-    @Query("SELECT * FROM aisleTable")
-    public LiveData<List<AisleWithProducts>> getAisleWithProducts();
 
     @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " WHERE name= :name")
     Aisle getAisleByNameFuture(String name);

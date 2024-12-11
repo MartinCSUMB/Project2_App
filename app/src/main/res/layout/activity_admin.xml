@@ -52,6 +52,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/manageAislesButton"
         />
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:text="return to main"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getInventoryButton"
+        />
 
 
 
