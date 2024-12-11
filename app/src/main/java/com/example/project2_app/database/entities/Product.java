@@ -15,6 +15,8 @@ public class Product {
 
     private int aisleId;
 
+    private int storeId;
+
     private String name;
 
     private double cost;
@@ -25,8 +27,9 @@ public class Product {
 
     private boolean isBookmarked;
 
-    public Product(int aisleId, String name, double cost, int partNumber, int count){
+    public Product(int aisleId, String name, double cost, int partNumber, int count, int storeId){
         this.aisleId = aisleId;
+        this.storeId = storeId;
         this.name = name;
         this.cost = cost;
         this.partNumber = partNumber;
@@ -53,6 +56,14 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(productId, name, cost, partNumber);
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public int getProductId() {

@@ -21,8 +21,12 @@ import java.util.List;
 
 public class ManageAislesActivity extends AppCompatActivity {
 
-    String mShelvesAdd = "";
-    String mShelvesRemove = "";
+    private String mShelvesAdd = "";
+    private String mShelvesRemove = "";
+
+    private int mStoreId = 0;
+
+    private Aisle aisle;
 
     private List<Aisle> allAisles;
 
@@ -95,8 +99,16 @@ public class ManageAislesActivity extends AppCompatActivity {
             Toast.makeText(this, "enter name for aisle", Toast.LENGTH_SHORT).show();
             return;
         }
-        Aisle aisle= new Aisle(mShelvesAdd);
-        repository.insertAisle(aisle);
+        aisle = repository.getAisleByNameAndStoreIdFuture(mShelvesAdd, mStoreId);
+        if(aisle!=null){
+            Toast.makeText(this, "this aisle already exists for this store", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Aisle aisle= new Aisle(mShelvesAdd,mStoreId);
+            repository.insertAisle(aisle);
+            Toast.makeText(this, "aisle created!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void deleteAisleRecord(){
@@ -104,28 +116,24 @@ public class ManageAislesActivity extends AppCompatActivity {
             Toast.makeText(this, "no more aisles to remove", Toast.LENGTH_SHORT).show();
         }
         else{
-            allProducts = repository.getAllProductsFuture();
             mShelvesRemove = binding.shelfNameSpinner.getSelectedItem().toString();
-            Aisle aisleDelete = null;
-            for(Aisle aisle : allAisles){
-                if (aisle.getName().equals(mShelvesRemove)){
-                    aisleDelete = aisle;
-                }
-            }
-            if(aisleDelete!=null){
-                repository.deleteAisle(aisleDelete);
-                Toast.makeText(this, "aisle deleted and the items in it", Toast.LENGTH_SHORT).show();
-                for(Product product: allProducts){
-                    if (product.getAisleId()==aisleDelete.getAisleId()){
-                        repository.deleteProduct(product);
+            aisle = repository.getAisleByNameAndStoreIdFuture(mShelvesAdd, mStoreId);{
+                if(aisle!= null){
+                    repository.deleteAisle(aisle);
+                    allProducts = repository.getAllProductsFuture();
+                    for(Product product: allProducts){
+                        if (product.getAisleId() == aisle.getAisleId()){
+                            repository.deleteProduct(product);
+                        }
                     }
                 }
             }
+
         }
     }
 
     private void makeArrayForSpinner(){
-        allAisles = repository.getAllAislesFuture();
+        allAisles = repository.getAllAislesByStoreId(mStoreId);
         arrayOfAisleNames =  new String[allAisles.size()];
         for(int i = 0; i < allAisles.size(); i++){
                 arrayOfAisleNames[i] = allAisles.get(i).getName();

@@ -71,4 +71,8 @@ public interface ProductDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE aisleId = :aisleId ORDER BY name DESC")
     List<Product> getProductListByAisleId(int aisleId);
 
+    //new methods
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE name= :name" + " AND storeId = :storeId")
+    Product getProductByNameAndStoreFuture(String name, int storeId);
+
 }

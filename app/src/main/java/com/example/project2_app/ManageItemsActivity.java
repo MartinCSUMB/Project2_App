@@ -19,6 +19,14 @@ import com.example.project2_app.databinding.ActivityManageItemsBinding;
 
 import java.util.List;
 
+/**
+ * @author: Joseph Young
+ * Description: activity for adding and removing products from db. Multiple instances of a product can
+ * exist in the database but it can only exist once per store. Adding items will either create a new
+ * product if it is brand new to the store, or update the product information with the user input if
+ * that store already has that product. Product IDs will be unique to every product
+ */
+
 public class ManageItemsActivity extends AppCompatActivity {
 
     //data from edit text boxes
@@ -27,6 +35,7 @@ public class ManageItemsActivity extends AppCompatActivity {
     private int mPartNumber = 0;
     private int mQuantity = 0;
     private double mCost =0.0;
+    private int mStoreId = 0;
     private String mAction = "";
 
     //used for setting entities retrieved from db
@@ -46,6 +55,8 @@ public class ManageItemsActivity extends AppCompatActivity {
         binding = ActivityManageItemsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = InventoryManagementRepository.getRepository(getApplication());
+
+        //todo retrieve store id
 
         //make spinner for add and remove
         String[] arraySpinner = new String[]{"add", "remove"};
@@ -104,6 +115,9 @@ public class ManageItemsActivity extends AppCompatActivity {
         return new Intent(context, ManageItemsActivity.class);
     }
 
+    /**
+     * gets info from edit text boxes
+     */
     private void getInformationFromDisplay(){
         mName = binding.itemNameEditText.getText().toString();
         try{
@@ -123,14 +137,21 @@ public class ManageItemsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * create array to be used for setting up spinner
+     */
     private void makeArrayForSpinner(){
-        allAisles = repository.getAllAislesFuture();
+        allAisles = repository.getAllAislesByStoreId(mStoreId);
         arrayOfAisleNames =  new String[allAisles.size()];
         for(int i = 0; i < allAisles.size(); i++){
             arrayOfAisleNames[i] = allAisles.get(i).getName();
         }
     }
 
+    /**
+     * ensures aisle and name are not blank. makes methods calls to add or remove value from the db
+     * depending on what is selected from the add/remove spinner
+     */
     private void insertProductRecord(){
         if(mAisleName.isEmpty()){
             Toast.makeText(this, "add aisles first then add items!", Toast.LENGTH_SHORT).show();
@@ -149,14 +170,18 @@ public class ManageItemsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * checks to see if this name is in the store. if the product exists in the store, it will be !Null.
+     * product is deleted once there are none left. If there are none left, the user is notified
+     */
     private void removeProductFromDB(String name, Aisle aisle) {
-        product=repository.getProductByNameFuture(name);
+        product = repository.getProductByNameAndStoreIdFuture(name,mStoreId);
         if(product!=null){
             if(product.getCount()-mQuantity < 1){
                 repository.deleteProduct(product);
             }
             else{
-                repository.updateCountByName(mName, product.getCount()-mQuantity);
+                repository.updateProductCount(product.getProductId(), product.getCount()-mQuantity);
             }
         }
         else{
@@ -164,11 +189,17 @@ public class ManageItemsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * checks to see if this name is in the store. if the product exists in the store, it will be !Null.
+     * if the product exists the quantity is of the product is increased by the quantity the user specifies.
+     * All other product fields are update with the input from the user input. If the does not exist in
+     * the store yet, it will new product will be inserted into the db.
+     */
     private void addProductToDB(String name, Aisle aisle){
-        product = repository.getProductByNameFuture(name);
+        product = repository.getProductByNameAndStoreIdFuture(name,mStoreId);
         //product name already exists, update the product info and increment the quantity as specified by user input
         if(product!=null){
-            repository.updateCountByName(mName,product.getCount() + mQuantity);
+            repository.updateProductCount(product.getProductId(),product.getCount() + mQuantity);
             repository.updatePartNumberById(product.getProductId(), mPartNumber);
             repository.updateProductAisleIdById(product.getProductId(), aisle.getAisleId());
             repository.updateProductCost(product.getProductId(), mCost);
@@ -176,10 +207,10 @@ public class ManageItemsActivity extends AppCompatActivity {
         }
         //else create new product and insert into db
         else{
-            Product productToAdd = new Product(aisle.getAisleId(), mName, mCost, mPartNumber, mQuantity);
+            Product productToAdd = new Product(aisle.getAisleId(), mName, mCost, mPartNumber, mQuantity, mStoreId);
             repository.insertProduct(productToAdd);
             Toast.makeText(this, "added new item to aisle", Toast.LENGTH_SHORT).show();
         }
     }
-
+    //todo just fixed add aisle maybe, I need to make sure spinner only selects shelf with matching store id.
 }
