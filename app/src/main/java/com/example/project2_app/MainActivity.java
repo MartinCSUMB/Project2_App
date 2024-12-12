@@ -56,25 +56,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Intent intent = getIntent();
-        String store = intent.getStringExtra("storeSelected");
-
-        Log.d("DAC_APP", "Received store: " + store);
-
-        if(store != null){
-            loggedStoreId = 1;
-        }
-        else {
-            Toast.makeText(MainActivity.this, "Selection Empty", Toast.LENGTH_SHORT).show();
-            loggedStoreId = -1;
-        }
-
-        //starts with StoreActivity
-        if(loggedStoreId == -1) {
-            intent = StoreActivity.storeIntentFactory(getApplicationContext());
-            startActivity(intent);
-        }
-
 
         repository = InventoryManagementRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
@@ -192,7 +173,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginStore(String store) {
-        Log.i("DAC_APP","Main Activity");
+        Log.i("DAC_APP", "Main Activity");
+    }
 
     static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);

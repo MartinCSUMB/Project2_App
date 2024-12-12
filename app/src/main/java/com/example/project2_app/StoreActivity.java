@@ -59,7 +59,7 @@ public class StoreActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if(!selection.isEmpty()){
-                            intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+                            intent = LoginActivity.loginIntentFactory(getApplicationContext());
                             intent.putExtra("storeSelected", selection);
                             Log.i("DAC_APP",selection);
                             startActivity(intent);

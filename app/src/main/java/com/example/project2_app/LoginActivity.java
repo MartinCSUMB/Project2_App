@@ -9,6 +9,8 @@ import com.example.project2_app.database.InventoryManagementRepository;
 import com.example.project2_app.database.entities.User;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private InventoryManagementRepository repository;
 
+    int loggedStoreId = -1;
+
 
 
     @Override
@@ -32,6 +36,25 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = InventoryManagementRepository.getRepository(getApplication());
+
+        Intent intent = getIntent();
+        String store = intent.getStringExtra("storeSelected");
+
+        Log.d("DAC_APP", "Received store: " + store);
+
+        if(store != null){
+            loggedStoreId = 1;
+        }
+        else {
+            Toast.makeText(LoginActivity.this, "Selection Empty", Toast.LENGTH_SHORT).show();
+            loggedStoreId = -1;
+        }
+
+        //starts with StoreActivity
+        if(loggedStoreId == -1) {
+            intent = StoreActivity.storeIntentFactory(getApplicationContext());
+            startActivity(intent);
+        }
 
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
