@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.project2_app.database.InventoryManagementRepository;
+import com.example.project2_app.database.StoreDAO;
 import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.User;
 import com.example.project2_app.databinding.ActivityMainBinding;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private User user;
 
 
-
     public static Intent mainActivityIntentFactory(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -56,17 +56,25 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        String store = intent.getStringExtra("storeSelected");
+
+        Log.d("DAC_APP", "Received store: " + store);
+
+        if(store != null){
+            loggedStoreId = 1;
+        }
+        else {
+            Toast.makeText(MainActivity.this, "Selection Empty", Toast.LENGTH_SHORT).show();
+            loggedStoreId = -1;
+        }
+
         //starts with StoreActivity
-        /*
-
-        loginStore();
-
         if(loggedStoreId == -1) {
-            Intent intent = StoreActivity.storeIntentFactory(getApplicationContext());
+            intent = StoreActivity.storeIntentFactory(getApplicationContext());
             startActivity(intent);
         }
 
-         */
 
         repository = InventoryManagementRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
@@ -183,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(LoginActivity.loginIntentFactory(getApplication()));
     }
 
+    private void loginStore(String store) {
+        Log.i("DAC_APP","Main Activity");
 
     static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);

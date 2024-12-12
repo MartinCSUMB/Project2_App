@@ -30,6 +30,7 @@ public class InventoryManagementRepository {
 
     public InventoryManagementRepository(Application application) {
         InventoryManagementDatabase db = InventoryManagementDatabase.getDatabase(application);
+
         productDAO = db.productDAO();
         aisleDAO = db.aisleDAO();
         storeDAO = db.storeDAO();
