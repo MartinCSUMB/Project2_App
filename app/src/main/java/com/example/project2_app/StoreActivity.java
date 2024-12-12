@@ -25,6 +25,8 @@ public class StoreActivity extends AppCompatActivity {
     private InventoryManagementRepository repository;
     private String selection;
 
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,10 @@ public class StoreActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if(!selection.isEmpty()){
-                            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext()));
+                            intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+                            intent.putExtra("storeSelected", selection);
+                            Log.i("DAC_APP",selection);
+                            startActivity(intent);
                         }
                         else{
                             Toast.makeText(StoreActivity.this, "Selection Empty", Toast.LENGTH_SHORT).show();
