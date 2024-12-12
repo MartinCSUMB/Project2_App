@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/allInventoryTextView"
         android:layout_width="match_parent"
-        android:layout_height="500dip"
+        android:layout_height="400dip"
         android:layout_margin="16dip"
         android:gravity="left"
         android:text="(list items by Aisle here)"
@@ -30,20 +30,67 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inventoryTextView"
-
         />
+
+    <Spinner
+        android:id="@+id/storeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@id/pickAisleTextView"
+        app:layout_constraintTop_toBottomOf="@id/pickProductextView" />
+
+    <Spinner
+        android:id="@+id/productToBookMarkSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@id/pickAisleTextView"
+        app:layout_constraintTop_toBottomOf="@id/allInventoryTextView" />
+
+    <TextView
+        android:id="@+id/pickProductextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="pick product to bookmark"
+        android:textSize="15sp"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/allInventoryTextView" />
+
+    <TextView
+        android:id="@+id/pickAisleTextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="pick aisle "
+        android:textSize="15sp"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pickProductextView" />
 
     <Button
         android:id="@+id/returnToAdminMenuFromInventoryButton"
         android:layout_width="180dp"
         android:layout_height="70dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="return to admin menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/allInventoryTextView" />
+        app:layout_constraintTop_toBottomOf="@id/storeSpinner" />
 
 
 

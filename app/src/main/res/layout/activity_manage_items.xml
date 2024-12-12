@@ -98,6 +98,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/itemNameEditText" />
 
+    <Spinner
+        android:id="@+id/storeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toEndOf="@id/toShelfTextView"
+        app:layout_constraintTop_toBottomOf="@id/aisleSpinner" />
+
+    <TextView
+        android:id="@+id/pickAisleTextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="pick aisle "
+        android:textSize="15sp"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toShelfTextView" />
+
+
     <Button
         android:id="@+id/enterButton"
         android:layout_width="180dp"
@@ -107,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toShelfTextView" />
+        app:layout_constraintTop_toBottomOf="@id/storeSpinner" />
 
     <Button
         android:id="@+id/returnToAdminMenuButton"
