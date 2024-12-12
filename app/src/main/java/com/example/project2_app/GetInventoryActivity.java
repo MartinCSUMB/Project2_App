@@ -90,7 +90,7 @@ public class GetInventoryActivity extends AppCompatActivity {
     private void updateDisplay() {
         List<Aisle> allAisles = repository.getAllAislesByStoreId(mStoreId);
         List<Product> productsOnAisle;
-        List<String> productNames = new ArrayList<>(); // To populate the spinner
+        List<String> productNames = new ArrayList<>();
 
         if (allAisles.isEmpty()) {
             binding.allInventoryTextView.setText("No items in inventory. womp womp :(");
@@ -106,7 +106,7 @@ public class GetInventoryActivity extends AppCompatActivity {
                             .append("  Price: ").append(product.getCost())
                             .append(" Quantity: ").append(product.getCount())
                             .append('\n').append('\n');
-                    productNames.add(product.getName()); // Add product name to the list
+                    productNames.add(product.getName());
                 }
             }
             binding.allInventoryTextView.setText(sb.toString());
