@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.project2_app.database.InventoryManagementRepository;
+import com.example.project2_app.database.entities.User;
 import com.example.project2_app.databinding.ActivityRegistrationBinding;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private InventoryManagementRepository repository;
 
-    private Observer observer;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,53 +35,57 @@ public class RegistrationActivity extends AppCompatActivity {
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.returnToAdminMenuFromRegistrationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
-                startActivity(intent);
-            }
+        repository = new InventoryManagementRepository(getApplication());
+
+        binding.returnToAdminMenuFromRegistrationButton.setOnClickListener(v -> {
+            Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+            startActivity(intent);
         });
 
-        binding.enterRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!doesUserNameExist(mUsername)){
-                    if(mPassword.equals(mConfirmPassword)){
-                        //todo create user
-                    }
-                    else{
-                        Toast.makeText(RegistrationActivity.this, "passwords do not match", Toast.LENGTH_SHORT).show();
-                    }
+        binding.enterRegisterButton.setOnClickListener(v -> {
+            mUsername = binding.usernameEditText.getText().toString().trim();
+            mPassword = binding.passwordEditText.getText().toString().trim();
+            mConfirmPassword = binding.confirmPasswordEditText.getText().toString().trim();
 
-                }
-                else{
-                    Toast.makeText(RegistrationActivity.this, "this username is not available",
-                            Toast.LENGTH_SHORT).show();
-                }
+            if (mUsername.isEmpty() || mPassword.isEmpty() || mConfirmPassword.isEmpty()) {
+                Toast.makeText(RegistrationActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
 
+            executor.execute(() -> {
+                boolean usernameExists = doesUserNameExist(mUsername);
+                runOnUiThread(() -> {
+                    if (!usernameExists) {
+                        if (mPassword.equals(mConfirmPassword)) {
+                            createUser(mUsername, mPassword);
+                        } else {
+                            Toast.makeText(RegistrationActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "This username is not available", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+        });
     }
 
-    static Intent registrationIntentFactory(Context context){
+    static Intent registrationIntentFactory(Context context) {
         return new Intent(context, RegistrationActivity.class);
     }
 
-    private boolean doesUserNameExist(String username){
-        //todo make repository method to get number of users with matching id
-        /*
-        if (repository.getUserByUsername()< 0){
-            return false;
-           }
-        else{
-            return true;
-           }
-         */
+    private boolean doesUserNameExist(String username) {
+        User user = repository.getUserByUsername(username);
+        return user != null;
+    }
 
-        /**
-         * @QUERY("SELECT COUNT() FROM InventoryManagementDatabase.USER_TABLE WHERE username = :username")
-         */
-        return false;
+    private void createUser(String username, String password) {
+        User newUser = new User(username, password);
+        executor.execute(() -> {
+            repository.insertUser(newUser);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            });
+        });
     }
 }
