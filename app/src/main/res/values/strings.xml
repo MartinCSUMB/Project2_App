@@ -43,4 +43,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="logged_in">LOGGED_IN</string>
+    <string name="preference_file_key">daclinkPreferenceFileKeyProject2</string>
+    <string name="preference_userId_key">daclinkPreferenceUserIdKeyProject2</string>
 </resources>
