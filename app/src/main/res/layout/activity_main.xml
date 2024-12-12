@@ -46,6 +46,16 @@
         app:layout_constraintTop_toBottomOf="@id/hello" />
 
 
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Welcome User: [username]"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subheadingTextView" />
 
     <Button
         android:id="@+id/activity1Button"
@@ -56,7 +66,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subheadingTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
 
     <Button
         android:id="@+id/adminMenuButton"
