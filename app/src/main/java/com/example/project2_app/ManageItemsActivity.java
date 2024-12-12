@@ -76,6 +76,30 @@ public class ManageItemsActivity extends AppCompatActivity {
         aisleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         aisleSpin.setAdapter(aisleAdapter);
 
+        //setting up store spinners
+        String[] storeSpinner = new String[]{"College Ave", "Murphy Canyon Rd", "Dennery Rd"};
+
+        Spinner storeSpin = (Spinner) findViewById(R.id.storeSpinner);
+        ArrayAdapter<String> storeAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, storeSpinner);
+        storeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        storeSpin.setAdapter(storeAdapter);
+
+        binding.storeSetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String location = storeSpin.getSelectedItem().toString();
+                if(location.equals("College Ave")) mStoreId = 1;
+                if(location.equals("Murphy Canyon Rd")) mStoreId = 2;
+                if(location.equals("Dennery Rd")) mStoreId = 3;
+                makeArrayForSpinner();
+                setUpAisleSpinner();
+            }
+
+        });
+
+
+
         binding.enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,5 +236,12 @@ public class ManageItemsActivity extends AppCompatActivity {
             Toast.makeText(this, "added new item to aisle", Toast.LENGTH_SHORT).show();
         }
     }
-    //todo just fixed add aisle maybe, I need to make sure spinner only selects shelf with matching store id.
+
+    private void setUpAisleSpinner(){
+        Spinner aisleSpin = (Spinner) findViewById(R.id.aisleSpinner);
+        ArrayAdapter<String> aisleAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arrayOfAisleNames);
+        aisleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        aisleSpin.setAdapter(aisleAdapter);
+    }
 }

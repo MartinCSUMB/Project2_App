@@ -92,7 +92,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="to shelf "
+        android:text="to aisle "
         android:textSize="15sp"
         app:flow_horizontalAlign="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +108,19 @@
         app:layout_constraintStart_toEndOf="@id/toShelfTextView"
         app:layout_constraintTop_toBottomOf="@id/aisleSpinner" />
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/storeSetButton"
+        android:text="set store"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/storeSpinner"
+        app:layout_constraintTop_toBottomOf="@id/aisleSpinner"
+        />
+
+
     <TextView
         android:id="@+id/pickAisleTextView"
         android:layout_width="100dp"
@@ -116,7 +129,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="pick aisle "
+        android:text="pick store "
         android:textSize="15sp"
         app:flow_horizontalAlign="center"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,28 @@ public class GetInventoryActivity extends AppCompatActivity {
         repository = InventoryManagementRepository.getRepository(getApplication());
         updateDisplay();
         binding.allInventoryTextView.setMovementMethod(new ScrollingMovementMethod());
+
+        //setting up store spinners
+        String[] storeSpinner = new String[]{"College Ave", "Murphy Canyon Rd", "Dennery Rd"};
+
+        Spinner storeSpin = (Spinner) findViewById(R.id.storeSpinner);
+        ArrayAdapter<String> storeAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, storeSpinner);
+        storeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        storeSpin.setAdapter(storeAdapter);
+
+        binding.storeSetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String location = storeSpin.getSelectedItem().toString();
+                if(location.equals("College Ave")) mStoreId = 1;
+                if(location.equals("Murphy Canyon Rd")) mStoreId = 2;
+                if(location.equals("Dennery Rd")) mStoreId = 3;
+                updateDisplay();
+            }
+
+        });
+
 
 
         binding.returnToAdminMenuFromInventoryButton.setOnClickListener(new View.OnClickListener() {
