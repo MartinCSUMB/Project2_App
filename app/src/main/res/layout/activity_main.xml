@@ -9,33 +9,66 @@
 
     <TextView
         android:id="@+id/hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="228dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="25dp"
+        android:gravity="center"
+        android:text="Stockify"
+        android:textSize="60sp"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/logoImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:layout_width="300dp"
-        android:id="@+id/helloButton"
-        android:layout_height="100dp"
-        android:text="hello"
-        app:layout_constraintTop_toBottomOf="@id/hello"
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hello"
+        app:layout_constraintEnd_toStartOf="@id/hello"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hello"
+        app:srcCompat="@drawable/stockifylogo" />
+
+
+    <TextView
+        android:id="@+id/subheadingTextView"
+        android:layout_width="228dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="An Inventory Manager"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="40sp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hello" />
+
+
 
     <Button
-        android:layout_width="300dp"
-        android:id="@+id/registrationButton"
-        android:layout_height="100dp"
-        android:text="registration"
-        app:layout_constraintTop_toBottomOf="@id/helloButton"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/activity1Button"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:text="Activity 1"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="40sp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subheadingTextView" />
+
+    <Button
+        android:id="@+id/adminMenuButton"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:text="Admin Menu"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity1Button" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

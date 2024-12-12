@@ -20,8 +20,9 @@ public class InventoryManagementRepository {
 
     private final ProductDAO productDAO;
     private final AisleDAO aisleDAO;
-    private final StoreDAO storeDAO;
     private final UserDAO userDAO;
+    private final StoreDAO storeDAO;
+
     private LiveData<List<Product>> allProducts;
     private LiveData<List<Aisle>> allAisles;
     private List<Store> allStores;
@@ -153,5 +154,11 @@ public class InventoryManagementRepository {
     // Bookmark Methods
     public LiveData<List<Product>> getBookmarkedItems() {
         return productDAO.getBookmarkedItems();
+    }
+    public LiveData<User> getUserByUserName(String username) {
+        return userDAO.getUserByUserName(username);
+    }
+    public LiveData<User> getUserByUserId(int loggedInUserId) {
+        return userDAO.getUserByUserId(loggedInUserId);
     }
 }
