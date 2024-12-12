@@ -26,6 +26,8 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
     public abstract ProductDAO productDAO();
     public abstract AisleDAO aisleDAO();
     public abstract StoreDAO storeDAO();
+    public abstract UserDAO userDAO();
+  
     public static final String PRODUCT_TABLE = "productTable";
     public static final String AISLE_TABLE = "aisleTable";
     public static final String STORE_TABLE = "storeTable";
@@ -91,6 +93,4 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
         }
     };
 
-
-    public abstract UserDAO userDAO();
 }
