@@ -64,7 +64,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
+        binding.activity1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SearchActivity.searchIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
 
     }
 
