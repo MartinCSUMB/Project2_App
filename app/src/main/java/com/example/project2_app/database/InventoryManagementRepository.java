@@ -9,6 +9,7 @@ import com.example.project2_app.AdminActivity;
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.Store;
+import com.example.project2_app.database.entities.User;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -19,7 +20,10 @@ public class InventoryManagementRepository {
 
     private final ProductDAO productDAO;
     private final AisleDAO aisleDAO;
-    private StoreDAO storeDAO;
+
+    private final UserDAO userDAO;
+    private final StoreDAO storeDAO;
+
     private LiveData<List<Product>> allProducts;
     private LiveData<List<Aisle>> allAisles;
     private List<Store> allStores;
@@ -29,6 +33,7 @@ public class InventoryManagementRepository {
         productDAO = db.productDAO();
         aisleDAO = db.aisleDAO();
         storeDAO = db.storeDAO();
+        userDAO = db.userDAO();
 
         allProducts = productDAO.getAllProducts();
         allAisles = aisleDAO.getAllAisles();
@@ -132,6 +137,14 @@ public class InventoryManagementRepository {
 
     public LiveData<List<Product>> getBookmarkedItems() {
         return productDAO.getBookmarkedItems();
+    }
+
+
+    public LiveData<User> getUserByUserName(String username) {
+        return userDAO.getUserByUserName(username);
+    }
+    public LiveData<User> getUserByUserId(int loggedInUserId) {
+        return userDAO.getUserByUserId(loggedInUserId);
     }
 
 }

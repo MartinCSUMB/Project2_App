@@ -12,17 +12,15 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
-
     private String password;
-
     private boolean isAdmin;
-
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         isAdmin = false;
     }
+
 
     @Override
     public boolean equals(Object o) {

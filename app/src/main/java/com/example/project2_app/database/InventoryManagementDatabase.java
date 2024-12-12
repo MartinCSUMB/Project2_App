@@ -26,7 +26,6 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
     public abstract ProductDAO productDAO();
     public abstract AisleDAO aisleDAO();
     public abstract StoreDAO storeDAO();
-    public abstract UserDAO UserDAO();
     public static final String PRODUCT_TABLE = "productTable";
     public static final String AISLE_TABLE = "aisleTable";
     public static final String STORE_TABLE = "storeTable";
@@ -80,9 +79,18 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
                 Store store3 = new Store("Dennery Rd");
                 sDao.insert(store3);
 
+
+                UserDAO uDao = INSTANCE.userDAO();
+                User admin = new User("admin1", "admin1");
+                admin.setAdmin(true);
+                uDao.insert(admin);
+                User testUser1 = new User("testuser1","testuser1");
+                uDao.insert(testUser1);
+
             });
         }
     };
 
 
+    public abstract UserDAO userDAO();
 }

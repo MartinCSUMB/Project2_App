@@ -45,74 +45,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hello" />
 
-    <TextView
-        android:id="@+id/usernameLabelTextView"
-        android:layout_width="91dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="200dp"
-        android:text="Username:"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/usernameEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hello" />
 
-    <EditText
-        android:id="@+id/usernameEditText"
-        android:layout_width="225dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter Username"
-        android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/usernameLabelTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/usernameLabelTextView" />
-
-    <TextView
-        android:id="@+id/passwordLabelTextView"
-        android:layout_width="91dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
-        android:text="Password:"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/passwordEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usernameLabelTextView" />
-
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="225dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/passwordLabelTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/passwordLabelTextView" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/activity1Button"
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:text="Login"
+        android:text="Activity 1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/subheadingTextView" />
 
     <Button
-        android:id="@+id/registrationButton"
+        android:id="@+id/adminMenuButton"
         android:layout_width="175dp"
         android:layout_height="50dp"
-        android:text="registration"
+        android:text="Admin Menu"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@id/activity1Button" />
 
 
 
