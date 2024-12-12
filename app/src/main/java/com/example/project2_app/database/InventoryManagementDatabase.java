@@ -64,13 +64,13 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(()-> {
                 ProductDAO pdao = INSTANCE.productDAO();
                 pdao.deleteAll();
-                Product testProduct = new Product(1, "test", 1.0, 1234);
+                Product testProduct = new Product(1, "test", 1.0, 1234,3,1);
                 pdao.insert(testProduct);
-                Product testProduct2 = new Product(1,"toiler paper", 5.00, 2342990);
+                Product testProduct2 = new Product(1,"toiler paper", 5.00, 2342990,1,1);
                 pdao.insert(testProduct2);
 
                 AisleDAO adao = INSTANCE.aisleDAO();
-                Aisle testAisle = new Aisle("bathroom");
+                Aisle testAisle = new Aisle("bathroom",1);
                 adao.insert(testAisle);
 
                 StoreDAO sDao = INSTANCE.storeDAO();

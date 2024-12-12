@@ -12,10 +12,12 @@ public class Aisle {
     @PrimaryKey(autoGenerate = true)
     private int aisleId;
 
+    private int storeId;
     private String name;
 
-    public Aisle(String name) {
+    public Aisle(String name,int storeId) {
         this.name = name;
+        this.storeId = storeId;
     }
 
     @Override
@@ -37,6 +39,14 @@ public class Aisle {
 
     public void setAisleId(int aisleId) {
         this.aisleId = aisleId;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public String getName() {

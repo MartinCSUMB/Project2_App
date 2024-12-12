@@ -52,6 +52,7 @@
         app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
 
     <EditText
+        android:id="@+id/quantityEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dip"
@@ -59,6 +60,17 @@
         android:inputType="text"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@id/itemPartNumberEditText"
+        app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
+
+    <EditText
+        android:id="@+id/costEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:hint="cost"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/quantityEditText"
         app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
 
 
@@ -80,11 +92,49 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="to shelf "
+        android:text="to aisle "
         android:textSize="15sp"
         app:flow_horizontalAlign="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/itemNameEditText" />
+
+    <Spinner
+        android:id="@+id/storeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toEndOf="@id/toShelfTextView"
+        app:layout_constraintTop_toBottomOf="@id/aisleSpinner" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/storeSetButton"
+        android:text="set store"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/storeSpinner"
+        app:layout_constraintTop_toBottomOf="@id/aisleSpinner"
+        />
+
+
+    <TextView
+        android:id="@+id/pickAisleTextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="pick store "
+        android:textSize="15sp"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toShelfTextView" />
+
 
     <Button
         android:id="@+id/enterButton"
@@ -95,7 +145,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toShelfTextView" />
+        app:layout_constraintTop_toBottomOf="@id/storeSpinner" />
 
     <Button
         android:id="@+id/returnToAdminMenuButton"
@@ -107,7 +157,6 @@
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enterButton" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

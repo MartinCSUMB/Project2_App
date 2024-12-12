@@ -41,14 +41,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOGGED_OUT = -1;
     private ActivityMainBinding binding;
     private InventoryManagementRepository repository;
-
+// hello
     private int id;
     private int result;
     private Product product;
 
     int loggedInUserId = -1;
     private User user;
-
 
     public static Intent mainActivityIntentFactory(Context context) {
         return new Intent(context, MainActivity.class);
@@ -80,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         binding.adminMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = AdminActivity.adminIntentFactory(getApplicationContext());
+                startActivity(intent);
 
             }
         });
