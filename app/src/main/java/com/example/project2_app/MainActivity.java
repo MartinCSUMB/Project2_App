@@ -68,13 +68,21 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        binding.activity1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SearchActivity.searchIntentFactory(getApplicationContext());
+                startActivity(intent);
+
+            }
+        });
+
         binding.adminMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-
 
 
 
@@ -193,6 +201,5 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
         return intent;
     }
-
 
 }
