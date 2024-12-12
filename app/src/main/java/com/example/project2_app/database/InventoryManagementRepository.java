@@ -11,6 +11,7 @@ import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.Store;
 import com.example.project2_app.database.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -228,5 +229,39 @@ public class InventoryManagementRepository {
         InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
             productDAO.updateProductAisleIdById(productId, aisleID);
         });
+    }
+
+    public Aisle getAisleByNameAndStoreIdFuture(String name, int storeId) {
+        Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Aisle>(){
+                    @Override
+                    public Aisle call() throws Exception{
+                        return aisleDAO.getAisleByNameAndStoreIdFuture(name,storeId);
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
+    public List<Product> getAllProductsFuture() {
+        Future<ArrayList<Product>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Product>>() {
+                    @Override
+                    public ArrayList<Product> call() throws Exception {
+                        return (ArrayList<Product>) productDAO.getAllProductsFuture();
+                    }
+                });
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+
+
     }
 }

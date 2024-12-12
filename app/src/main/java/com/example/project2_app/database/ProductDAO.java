@@ -51,4 +51,7 @@ public interface ProductDAO {
     @Query("UPDATE productTable SET aisleId=:aisleId WHERE productId = :productId")
     void updateProductAisleIdById(int productId, int aisleId);
 
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " ORDER BY name DESC")
+    List<Product> getAllProductsFuture();
+
 }
