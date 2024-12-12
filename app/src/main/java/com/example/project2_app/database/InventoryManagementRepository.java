@@ -27,7 +27,7 @@ public class InventoryManagementRepository {
     private List<Store> allStores;
     private static InventoryManagementRepository repository;
 
-    private InventoryManagementRepository(Application application) {
+    public InventoryManagementRepository(Application application) {
         InventoryManagementDatabase db = InventoryManagementDatabase.getDatabase(application);
         productDAO = db.productDAO();
         aisleDAO = db.aisleDAO();
