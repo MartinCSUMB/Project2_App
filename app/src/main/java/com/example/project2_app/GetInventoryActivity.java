@@ -60,6 +60,17 @@ public class GetInventoryActivity extends AppCompatActivity {
 
         });
 
+        binding.bookmarkButton.setOnClickListener(v -> {
+            String productName = binding.productToBookMarkSpinner.getSelectedItem().toString();
+            Product product = repository.getProductByNameAndStoreIdFuture(productName, mStoreId);
+
+            if (product != null) {
+                boolean currentBookmarkStatus = product.isBookmarked();
+                repository.updateBookmark(product.getProductId(), !currentBookmarkStatus);
+                updateDisplay(); // Refresh inventory view
+            }
+        });
+
 
 
         binding.returnToAdminMenuFromInventoryButton.setOnClickListener(new View.OnClickListener() {
@@ -76,27 +87,36 @@ public class GetInventoryActivity extends AppCompatActivity {
         return new Intent(context, GetInventoryActivity.class);
     }
 
-    private void updateDisplay(){
+    private void updateDisplay() {
         List<Aisle> allAisles = repository.getAllAislesByStoreId(mStoreId);
         List<Product> productsOnAisle;
+        List<String> productNames = new ArrayList<>();
 
-        if(allAisles.isEmpty()){
+        if (allAisles.isEmpty()) {
             binding.allInventoryTextView.setText("No items in inventory. womp womp :(");
-        }
-        else {
+        } else {
             StringBuilder sb = new StringBuilder();
             for (Aisle aisle : allAisles) {
                 sb.append("Aisle: ").append(aisle.getName()).append(":").append('\n');
                 productsOnAisle = repository.getProductListByAisleId(aisle.getAisleId());
                 for (Product product : productsOnAisle) {
-                    sb.append("  Product: ").append(product.getName()).append(" (P/N: ").
-                            append(product.getPartNumber()).append(")").append('\n').append("  Price: ").append(product.getCost()).
-                            append(" Quantity: ").append(product.getCount()).append('\n').append('\n');
+                    sb.append("  Product: ").append(product.getName())
+                            .append(" (Bookmarked: ").append(product.isBookmarked() ? "Yes" : "No").append(")")
+                            .append('\n')
+                            .append("  Price: ").append(product.getCost())
+                            .append(" Quantity: ").append(product.getCount())
+                            .append('\n').append('\n');
+                    productNames.add(product.getName());
                 }
-
-
             }
             binding.allInventoryTextView.setText(sb.toString());
         }
+
+        ArrayAdapter<String> productAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, productNames);
+        productAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.productToBookMarkSpinner.setAdapter(productAdapter);
     }
+
+
 }
