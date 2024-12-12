@@ -33,4 +33,11 @@ public interface AisleDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " WHERE aisleId = :aisleId")
     LiveData<Aisle> getAisleById(int aisleId);
 
+    //joe
+    @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " WHERE storeId=:storeId")
+    List<Aisle> getAllAislesByStoreId(int storeId);
+
+    @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " WHERE name= :name")
+    Aisle getAisleByNameFuture(String name);
+
 }

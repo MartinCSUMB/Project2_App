@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     int loggedInUserId = -1;
     private User user;
-    
+
     public static Intent mainActivityIntentFactory(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         binding.adminMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = AdminActivity.adminIntentFactory(getApplicationContext());
+                startActivity(intent);
 
             }
         });

@@ -52,6 +52,7 @@
         app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
 
     <EditText
+        android:id="@+id/quantityEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dip"
@@ -59,6 +60,17 @@
         android:inputType="text"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@id/itemPartNumberEditText"
+        app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
+
+    <EditText
+        android:id="@+id/costEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dip"
+        android:hint="cost"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/quantityEditText"
         app:layout_constraintTop_toBottomOf="@id/addOrRemoveSpinner" />
 
 
@@ -107,7 +119,6 @@
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enterButton" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

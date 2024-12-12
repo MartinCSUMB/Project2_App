@@ -162,4 +162,71 @@ public class InventoryManagementRepository {
     public LiveData<User> getUserByUserId(int loggedInUserId) {
         return userDAO.getUserByUserId(loggedInUserId);
     }
+
+    //methods joe added
+    public List<Aisle> getAllAislesByStoreId(int storeId){
+        Future<List<Aisle>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Aisle>>(){
+                    @Override
+                    public List<Aisle> call() throws Exception{
+                        return aisleDAO.getAllAislesByStoreId(storeId);
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "problem getting list of products with aisle id");
+        }
+        return null;
+    }
+
+    public Aisle getAisleByNameFuture(String name) {
+        Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Aisle>(){
+                    @Override
+                    public Aisle call() throws Exception{
+                        return aisleDAO.getAisleByNameFuture(name) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
+    public Product getProductByNameAndStoreIdFuture(String name, int storeId) {
+        Future<Product> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Product>(){
+                    @Override
+                    public Product call() throws Exception{
+                        return productDAO.getProductByNameAndStoreFuture(name,storeId) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
+    public void deleteProduct(Product product){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.delete(product);
+        });
+    }
+
+    public void  updatePartNumberById(int productId, int partNumber){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.updatePartNumberById(productId, partNumber);
+        });
+    }
+
+    public void  updateProductAisleIdById(int productId, int aisleID){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.updateProductAisleIdById(productId, aisleID);
+        });
+    }
 }
