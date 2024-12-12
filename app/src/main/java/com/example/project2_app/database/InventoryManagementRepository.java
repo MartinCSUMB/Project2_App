@@ -294,4 +294,13 @@ public class InventoryManagementRepository {
         }
         return null;
     }
+
+    //krithika
+
+    public void updateBookmark(int productId, boolean isBookmarked) {
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() -> {
+            productDAO.updateBookmark(productId, isBookmarked);
+        });
+    }
+
 }
