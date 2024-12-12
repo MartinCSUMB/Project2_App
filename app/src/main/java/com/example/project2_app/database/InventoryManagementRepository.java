@@ -66,7 +66,7 @@ public class InventoryManagementRepository {
     }
 
     public User getUserByUsername(String username) {
-        Callable<User> callable = () -> userDAO.getUserByUsername(username);
+        Callable<User> callable = () -> userDAO.getUserByUserName(username).getValue();
         Future<User> future = InventoryManagementDatabase.databaseWriteExecutor.submit(callable);
         try {
             return future.get();
