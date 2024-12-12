@@ -32,6 +32,14 @@ public class SearchActivity extends AppCompatActivity {
                 findSearch();
             }
         });
+        binding.returnToMainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Use this to prevent returning to the SearchActivity on back press
+            }
+        });
     }
 
     private void findSearch(){

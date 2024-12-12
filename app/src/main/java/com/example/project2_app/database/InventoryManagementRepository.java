@@ -162,4 +162,12 @@ public class InventoryManagementRepository {
     public LiveData<User> getUserByUserId(int loggedInUserId) {
         return userDAO.getUserByUserId(loggedInUserId);
     }
+    public void updateStoreSelected(int userId, String storeSelected) {
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.updateStoreSelected(userId, storeSelected);
+        });
+    }
+    public void updateUser(User user) {
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
+    }
 }
