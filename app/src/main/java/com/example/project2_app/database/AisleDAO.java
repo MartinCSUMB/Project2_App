@@ -43,4 +43,8 @@ public interface AisleDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " WHERE name= :name" + " AND storeId = :storeId")
     Aisle getAisleByNameAndStoreIdFuture(String name, int storeId);
 
+    @Query("SELECT * FROM " + InventoryManagementDatabase.AISLE_TABLE + " ORDER BY name DESC")
+    List<Aisle> getAllAislesListFuture();
+
+
 }

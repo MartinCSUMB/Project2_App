@@ -261,7 +261,37 @@ public class InventoryManagementRepository {
             e.printStackTrace();
         }
         return null;
+    }
 
+    public ArrayList<Aisle> getAllAislesListFuture() {
+        Future<ArrayList<Aisle>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Aisle>>() {
+                    @Override
+                    public ArrayList<Aisle> call() throws Exception {
+                        return (ArrayList<Aisle>) aisleDAO.getAllAislesListFuture();
+                    }
+                });
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public List<Product> getProductListByAisleId(int aisleId){
+        Future<List<Product>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Product>>(){
+                    @Override
+                    public List<Product> call() throws Exception{
+                        return productDAO.getProductListByAisleId(aisleId);
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "problem getting list of products with aisle id");
+        }
+        return null;
     }
 }
