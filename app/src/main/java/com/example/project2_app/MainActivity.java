@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import androidx.lifecycle.LiveData;
 import com.example.project2_app.database.InventoryManagementRepository;
 import com.example.project2_app.database.StoreDAO;
 import com.example.project2_app.database.entities.Product;
+import com.example.project2_app.database.entities.Store;
 import com.example.project2_app.database.entities.User;
 import com.example.project2_app.databinding.ActivityMainBinding;
 
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
+
 
 
 

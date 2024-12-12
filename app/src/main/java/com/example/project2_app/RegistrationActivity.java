@@ -3,6 +3,7 @@ package com.example.project2_app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,9 +35,15 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Log.d("RegistrationActivity", "RegistrationActivity loaded");
 
-        repository = new InventoryManagementRepository(getApplication());
-
+        executor.execute(() -> {
+            repository = new InventoryManagementRepository(getApplication());
+            runOnUiThread(() -> {
+                Log.d("RegistrationActivity", "Repository initialized successfully");
+                // Continue setup if needed
+            });
+        });
         binding.returnToAdminMenuFromRegistrationButton.setOnClickListener(v -> {
             Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
             startActivity(intent);

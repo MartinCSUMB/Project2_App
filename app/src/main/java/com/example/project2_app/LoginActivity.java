@@ -25,8 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private InventoryManagementRepository repository;
 
-    int loggedStoreId = -1;
-
 
 
     @Override
@@ -37,29 +35,18 @@ public class LoginActivity extends AppCompatActivity {
 
         repository = InventoryManagementRepository.getRepository(getApplication());
 
-        Intent intent = getIntent();
-        String store = intent.getStringExtra("storeSelected");
-
-        Log.d("DAC_APP", "Received store: " + store);
-
-        if(store != null){
-            loggedStoreId = 1;
-        }
-        else {
-            Toast.makeText(LoginActivity.this, "Selection Empty", Toast.LENGTH_SHORT).show();
-            loggedStoreId = -1;
-        }
-
-        //starts with StoreActivity
-        if(loggedStoreId == -1) {
-            intent = StoreActivity.storeIntentFactory(getApplicationContext());
-            startActivity(intent);
-        }
-
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyUser();
+            }
+        });
+        binding.registrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LoginActivity", "Navigating to RegistrationActivity");
+                Intent registrationIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(registrationIntent);
             }
         });
     }

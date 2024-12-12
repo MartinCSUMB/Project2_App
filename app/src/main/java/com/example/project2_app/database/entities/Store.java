@@ -46,4 +46,5 @@ public class Store {
     public void setStoreStreet(String storeStreet) {
         this.storeStreet = storeStreet;
     }
+
 }
