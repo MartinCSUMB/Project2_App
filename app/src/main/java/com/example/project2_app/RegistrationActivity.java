@@ -43,9 +43,9 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
         binding.enterRegisterButton.setOnClickListener(v -> {
-            mUsername = binding.usernameInput.getText().toString().trim();
-            mPassword = binding.passwordInput.getText().toString().trim();
-            mConfirmPassword = binding.confirmPasswordInput.getText().toString().trim();
+            mUsername = binding.usernameEditText.getText().toString().trim();
+            mPassword = binding.passwordEditText.getText().toString().trim();
+            mConfirmPassword = binding.confirmPasswordEditText.getText().toString().trim();
 
             if (mUsername.isEmpty() || mPassword.isEmpty() || mConfirmPassword.isEmpty()) {
                 Toast.makeText(RegistrationActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
