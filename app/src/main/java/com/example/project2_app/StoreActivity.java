@@ -74,6 +74,8 @@ public class StoreActivity extends AppCompatActivity {
                         Toast.makeText(StoreActivity.this, "Please select a store.", Toast.LENGTH_SHORT).show();
                     }
                 });
+                binding.backArrow.setOnClickListener(v -> finish());
+
             }
 
         } else {

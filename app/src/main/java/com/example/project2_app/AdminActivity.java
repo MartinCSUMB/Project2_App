@@ -51,6 +51,11 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+        binding.manageUsersButton.setOnClickListener(v -> {
+            Intent intent = ManageUsersActivity.manageUsersIntentFactory(getApplicationContext());
+            startActivity(intent);
+        });
+
         binding.returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,10 +64,10 @@ public class AdminActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     static Intent adminIntentFactory(Context context){
         return new Intent(context, AdminActivity.class);
     }
+
 }

@@ -3,97 +3,79 @@ package com.example.project2_app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.project2_app.database.InventoryManagementRepository;
 import com.example.project2_app.database.entities.User;
 import com.example.project2_app.databinding.ActivityRegistrationBinding;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class RegistrationActivity extends AppCompatActivity {
 
-    private String mUsername = "";
-    private String mPassword = "";
-    private String mConfirmPassword = "";
-
     private ActivityRegistrationBinding binding;
-
     private InventoryManagementRepository repository;
-
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private boolean isHandled = false; // Prevent multiple executions
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Log.d("RegistrationActivity", "RegistrationActivity loaded");
 
-        executor.execute(() -> {
-            repository = new InventoryManagementRepository(getApplication());
-            runOnUiThread(() -> {
-                Log.d("RegistrationActivity", "Repository initialized successfully");
-                // Continue setup if needed
-            });
-        });
+
+        repository = InventoryManagementRepository.getRepository(getApplication());
+
+
         binding.backArrow.setOnClickListener(v -> onBackPressed());
         binding.returnToAdminMenuFromRegistrationButton.setOnClickListener(v -> {
             Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
             startActivity(intent);
         });
 
-        binding.enterRegisterButton.setOnClickListener(v -> {
-            mUsername = binding.usernameEditText.getText().toString().trim();
-            mPassword = binding.passwordEditText.getText().toString().trim();
-            mConfirmPassword = binding.confirmPasswordEditText.getText().toString().trim();
 
-            if (mUsername.isEmpty() || mPassword.isEmpty() || mConfirmPassword.isEmpty()) {
-                Toast.makeText(RegistrationActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        binding.enterRegisterButton.setOnClickListener(v -> {
+            String username = binding.usernameEditText.getText().toString().trim();
+            String password = binding.passwordEditText.getText().toString().trim();
+            String confirmPassword = binding.confirmPasswordEditText.getText().toString().trim();
+
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            executor.execute(() -> {
-                boolean usernameExists = doesUserNameExist(mUsername);
-                runOnUiThread(() -> {
-                    if (!usernameExists) {
-                        if (mPassword.equals(mConfirmPassword)) {
-                            createUser(mUsername, mPassword);
-                        } else {
-                            Toast.makeText(RegistrationActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(RegistrationActivity.this, "This username is not available", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            });
+            if (!password.equals(confirmPassword)) {
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            validateAndRegisterUser(username, password);
         });
     }
 
-    static Intent registrationIntentFactory(Context context) {
-        return new Intent(context, RegistrationActivity.class);
-    }
+    private void validateAndRegisterUser(String username, String password) {
+        repository.getUserByUserName(username.toLowerCase()).observe(this, existingUser -> {
+            if (isHandled) return; // Prevent multiple triggers
+            repository.getUserByUserName(username.toLowerCase()).removeObservers(this); // Remove observer immediately
 
-    private boolean doesUserNameExist(String username) {
-        User user = repository.getUserByUsername(username);
-        return user != null;
+            if (existingUser != null) {
+                Toast.makeText(this, "This username is already taken.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Username is valid; create the new user
+                createUser(username, password);
+            }
+        });
     }
 
     private void createUser(String username, String password) {
         User newUser = new User(username, password);
-        executor.execute(() -> {
-            repository.insertUser(newUser);
-            runOnUiThread(() -> {
-                Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            });
-        });
+        repository.insertUser(newUser);
+        isHandled = true; // Mark as handled
+        Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show();
+        finish(); // Close the registration activity
+    }
+
+    public static Intent registrationIntentFactory(Context context) {
+        return new Intent(context, RegistrationActivity.class);
     }
 }
