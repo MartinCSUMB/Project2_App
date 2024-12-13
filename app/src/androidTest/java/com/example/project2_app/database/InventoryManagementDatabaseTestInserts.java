@@ -56,6 +56,7 @@ public class InventoryManagementDatabaseTestInserts {
         assertEquals("Test Aisle", aisles.get(0).getName());
     }
 
+    //tests inserting store into db
     @Test
     public void testInsertStore() {
         Store store = new Store("123 Main St");
@@ -65,6 +66,7 @@ public class InventoryManagementDatabaseTestInserts {
         assertEquals("123 Main St", stores.get(0).getStoreStreet());
     }
 
+    //tests inserting user into db
     @Test
     public void testInsertUser() {
         User user = new User("admin1", "password123");
@@ -75,11 +77,6 @@ public class InventoryManagementDatabaseTestInserts {
         assertEquals("admin1", users.get(0).getUsername());
         assertEquals("password123", users.get(0).getPassword());
     }
-
-
-
-
-
 
 
 }
