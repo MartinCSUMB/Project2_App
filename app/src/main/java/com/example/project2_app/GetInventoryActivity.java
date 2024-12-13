@@ -48,6 +48,8 @@ public class GetInventoryActivity extends AppCompatActivity {
         storeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         storeSpin.setAdapter(storeAdapter);
 
+        binding.backArrow.setOnClickListener(v -> onBackPressed());
+
         binding.storeSetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
