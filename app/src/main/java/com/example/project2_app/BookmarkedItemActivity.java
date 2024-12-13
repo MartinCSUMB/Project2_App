@@ -1,6 +1,5 @@
 package com.example.project2_app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,22 +10,38 @@ import com.example.project2_app.database.InventoryManagementRepository;
 import com.example.project2_app.database.entities.Product;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BookmarkedItemActivity extends AppCompatActivity {
 
     private InventoryManagementRepository repository;
+    private TextView bookmarkedItemsListTextView;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarked_items);
 
-        repository = InventoryManagementRepository.getRepository(getApplication());
-        TextView bookmarkedItemsListTextView = findViewById(R.id.bookmarkedItemsListTextView);
-        Button returnToMenuButton = findViewById(R.id.returnToMenuButton);
+        bookmarkedItemsListTextView = findViewById(R.id.bookmarkedItemsListTextView);
+        Button returnToMenuButton = findViewById(R.id.returnToPrevPage);
 
-        // Populate the list of bookmarked items
-        List<Product> bookmarkedProducts = repository.getBookmarkedProducts();
+        repository = InventoryManagementRepository.getRepository(getApplication());
+
+
+        executor.execute(() -> {
+            List<Product> bookmarkedProducts = repository.getBookmarkedProducts();
+
+
+            runOnUiThread(() -> displayBookmarkedItems(bookmarkedProducts));
+        });
+
+        
+        returnToMenuButton.setOnClickListener(v -> finish()); // Finish the activity to return to the previous page
+    }
+
+    private void displayBookmarkedItems(List<Product> bookmarkedProducts) {
         StringBuilder sb = new StringBuilder();
 
         if (bookmarkedProducts.isEmpty()) {
@@ -39,12 +54,7 @@ public class BookmarkedItemActivity extends AppCompatActivity {
                         .append("\n\n");
             }
         }
-        bookmarkedItemsListTextView.setText(sb.toString());
 
-        // Handle the return button
-        returnToMenuButton.setOnClickListener(v -> {
-            Intent intent = new Intent(BookmarkedItemActivity.this, GetInventoryActivity.class);
-            startActivity(intent);
-        });
+        bookmarkedItemsListTextView.setText(sb.toString());
     }
 }

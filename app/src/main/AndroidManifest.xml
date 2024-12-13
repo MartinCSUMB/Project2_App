@@ -36,7 +36,8 @@
         <activity
             android:name=".AdminActivity"
             android:exported="false" />
-        <activity android:name=".BookmarkedItemActivity" />
+        <activity android:name=".BookmarkedItemActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

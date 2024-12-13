@@ -32,46 +32,49 @@ public class SearchActivity extends AppCompatActivity {
                 findSearch();
             }
         });
+
+        binding.bookmarkedButton.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchActivity.this, BookmarkedItemActivity.class);
+            startActivity(intent);
+        });
     }
 
-    private void findSearch(){
+    private void findSearch() {
         String itemName = binding.searchNameEditText.getText().toString();
         String itemAisle = binding.searchAisleEditText.getText().toString();
 
-        if(itemName.isEmpty() && itemAisle.isEmpty()){
+        if (itemName.isEmpty() && itemAisle.isEmpty()) {
             toastMaker("Name or Aisle should not be empty");
             return;
         }
 
-        if(!itemName.isEmpty() && !itemAisle.isEmpty()){
+        if (!itemName.isEmpty() && !itemAisle.isEmpty()) {
             LiveData<Aisle> aisleObserver = repository.getAisleByName(itemAisle);
             aisleObserver.observe(this, aisle -> {
-                if(aisle != null){
+                if (aisle != null) {
                     LiveData<Product> productObserver = repository.getProductByAisleID(aisle.getAisleId());
                     productObserver.observe(this, product -> {
-                        if(product != null){
+                        if (product != null) {
                             Intent intent = GetInventoryActivity.getInventoryIntentFactory(getApplicationContext());
-                            intent.putExtra("productKey",itemName);
-                            intent.putExtra("aisleKey",itemAisle);
+                            intent.putExtra("productKey", itemName);
+                            intent.putExtra("aisleKey", itemAisle);
                             startActivity(intent);
-                        }
-                        else {
+                        } else {
                             toastMaker("Product not found");
                         }
                     });
-                }
-                else {
+                } else {
                     toastMaker("Aisle not found");
                 }
             });
         }
 
-        if(!itemName.isEmpty() && itemAisle.isEmpty()) {
+        if (!itemName.isEmpty() && itemAisle.isEmpty()) {
             LiveData<Product> productObserver = repository.getProductByName(itemName);
             productObserver.observe(this, product -> {
                 if (product != null) {
                     Intent intent = GetInventoryActivity.getInventoryIntentFactory(getApplicationContext());
-                    intent.putExtra("productKey",itemName);
+                    intent.putExtra("productKey", itemName);
                     startActivity(intent);
                 } else {
                     toastMaker("Product not found");
@@ -79,14 +82,14 @@ public class SearchActivity extends AppCompatActivity {
             });
         }
 
-        if(!itemAisle.isEmpty() && itemName.isEmpty()) {
+        if (!itemAisle.isEmpty() && itemName.isEmpty()) {
             LiveData<Aisle> aisleObserver = repository.getAisleByName(itemAisle);
             aisleObserver.observe(this, aisle -> {
                 if (aisle != null) {
                     LiveData<Product> productObserver = repository.getProductByAisleID(aisle.getAisleId());
                     productObserver.observe(this, product -> {
                         Intent intent = GetInventoryActivity.getInventoryIntentFactory(getApplicationContext());
-                        intent.putExtra("aisleKey",itemAisle);
+                        intent.putExtra("aisleKey", itemAisle);
                         startActivity(intent);
                     });
                 } else {
@@ -96,11 +99,11 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void toastMaker(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    private void toastMaker(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    static Intent searchIntentFactory(Context context){
+    static Intent searchIntentFactory(Context context) {
         return new Intent(context, SearchActivity.class);
     }
 }
