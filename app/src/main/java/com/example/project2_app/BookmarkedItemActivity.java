@@ -37,10 +37,11 @@ public class BookmarkedItemActivity extends AppCompatActivity {
             runOnUiThread(() -> displayBookmarkedItems(bookmarkedProducts));
         });
 
-        
-        returnToMenuButton.setOnClickListener(v -> finish()); // Finish the activity to return to the previous page
+
+        returnToMenuButton.setOnClickListener(v -> finish());
     }
 
+    //shows all of the displayed bookmarked items
     private void displayBookmarkedItems(List<Product> bookmarkedProducts) {
         StringBuilder sb = new StringBuilder();
 
