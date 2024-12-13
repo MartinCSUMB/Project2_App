@@ -24,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
             finish(); // Close SettingsActivity
         });
 
+
         findViewById(R.id.changeStoreButton).setOnClickListener(v -> {
             Intent intent = StoreActivity.storeIntentFactory(getApplicationContext());
             startActivity(intent);
