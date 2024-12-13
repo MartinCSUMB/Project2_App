@@ -57,6 +57,9 @@ public interface ProductDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE aisleId = :aisleId ORDER BY name DESC")
     List<Product> getProductListByAisleId(int aisleId);
 
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " ORDER BY name ASC")
+    List<Product> getProducts();
+
     //krithika
 
     @Query("UPDATE productTable SET isBookmarked = :isBookmarked WHERE productId = :productId")
