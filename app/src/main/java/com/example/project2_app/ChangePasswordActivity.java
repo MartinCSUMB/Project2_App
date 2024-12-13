@@ -24,6 +24,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = InventoryManagementRepository.getRepository(getApplication());
+        binding.backArrow.setOnClickListener(v -> onBackPressed());
 
         binding.savePasswordButton.setOnClickListener(v -> changePassword());
     }
