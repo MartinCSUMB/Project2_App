@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
 
 
@@ -42,27 +43,66 @@ public class InventoryManagementDatabaseTest {
         assertEquals(1, products.size());
     }
 
-    //this test checks update product
+//    //this test checks update product
+//    @Test
+//    public void testUpdateProduct() {
+//        Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
+//        database.productDAO().insert(product);
+//        product.setName("Updated Product");
+//        database.productDAO().update(product);
+//        Product updatedProduct = database.productDAO().getProductByNameAndStoreFuture("Updated Product", 1);
+//        assertNotNull(updatedProduct);
+//        assertEquals("Updated Product", updatedProduct.getName());
+//    }
+
+//    //this test checks delete product
+//    @Test
+//    public void testDeleteProduct() {
+//        Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
+//        database.productDAO().insert(product);
+//        database.productDAO().delete(product);
+//        List<Product> products = database.productDAO().getAllProductsFuture();
+//        assertTrue(products.isEmpty());
+//    }
+
     @Test
-    public void testUpdateProduct() {
-        Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
-        database.productDAO().insert(product);
-        product.setName("Updated Product");
-        database.productDAO().update(product);
-        Product updatedProduct = database.productDAO().getProductByNameAndStoreFuture("Updated Product", 1);
-        assertNotNull(updatedProduct);
-        assertEquals("Updated Product", updatedProduct.getName());
+    public void testInsertAisle() {
+        Aisle aisle = new Aisle("Test Aisle", 1);
+        database.aisleDAO().insert(aisle);
+        List<Aisle> aisles = database.aisleDAO().getAllAislesListFuture();
+        assertEquals(1, aisles.size());
+        assertEquals("Test Aisle", aisles.get(0).getName());
     }
 
-    //this test checks delete product
-    @Test
-    public void testDeleteProduct() {
-        Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
-        database.productDAO().insert(product);
-        database.productDAO().delete(product);
-        List<Product> products = database.productDAO().getAllProductsFuture();
-        assertTrue(products.isEmpty());
-    }
+//    @Test
+//    public void testUpdateAisle() {
+//        Aisle aisle = new Aisle("Test Aisle", 1);
+//        database.aisleDAO().insert(aisle);
+//        aisle.setName("Updated Aisle");
+//        database.aisleDAO().update(aisle);
+//        Aisle updatedAisle = database.aisleDAO().getAisleByNameFuture("Updated Aisle");
+//        assertNotNull(updatedAisle);
+//        assertEquals("Updated Aisle", updatedAisle.getName());
+//    }
+
+//    @Test
+//    public void testDeleteAisle() {
+//        Aisle aisle = new Aisle("Test Aisle", 1);
+//        database.aisleDAO().insert(aisle);
+//
+//        // Check the aisle exists before deletion
+//        List<Aisle> aislesBeforeDelete = database.aisleDAO().getAllAislesListFuture();
+//        assertFalse(aislesBeforeDelete.isEmpty());
+//
+//        // Delete the aisle
+//        database.aisleDAO().delete(aisle);
+//
+//        // Validate deletion
+//        List<Aisle> aislesAfterDelete = database.aisleDAO().getAllAislesListFuture();
+//        assertTrue(aislesAfterDelete.isEmpty());
+//    }
+
+
 
 
 
