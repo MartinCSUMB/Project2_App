@@ -48,6 +48,16 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), -1);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     static Intent adminIntentFactory(Context context){
