@@ -27,6 +27,7 @@ public class InventoryManagementRepository {
     private LiveData<List<Product>> allProducts;
     private LiveData<List<Aisle>> allAisles;
     private List<Store> allStores;
+    List<Product> products;
     private static InventoryManagementRepository repository;
 
     public InventoryManagementRepository(Application application) {
@@ -40,6 +41,7 @@ public class InventoryManagementRepository {
         allProducts = productDAO.getAllProducts();
         allAisles = aisleDAO.getAllAisles();
         allStores = storeDAO.getAllStores();
+        products = productDAO.getProducts();
     }
 
     public static InventoryManagementRepository getRepository(Application application) {
@@ -329,4 +331,11 @@ public class InventoryManagementRepository {
 
 
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public List<Product> getBookmarkedProducts() {
+        return productDAO.getBookmarkedItemsFuture();
+    }
 }

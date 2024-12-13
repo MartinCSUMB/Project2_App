@@ -19,6 +19,9 @@
             android:name=".ChangeUsernameActivity"
             android:exported="false" />
         <activity
+            android:name=".searchListActivity"
+            android:exported="false"/>
+        <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
         <activity

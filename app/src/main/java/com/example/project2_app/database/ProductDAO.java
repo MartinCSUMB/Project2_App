@@ -57,10 +57,15 @@ public interface ProductDAO {
     @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE aisleId = :aisleId ORDER BY name DESC")
     List<Product> getProductListByAisleId(int aisleId);
 
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " ORDER BY name ASC")
+    List<Product> getProducts();
+
     //krithika
 
     @Query("UPDATE productTable SET isBookmarked = :isBookmarked WHERE productId = :productId")
     void updateBookmark(int productId, boolean isBookmarked);
 
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE isBookmarked = 1")
+    List<Product> getBookmarkedItemsFuture();
 
 }
