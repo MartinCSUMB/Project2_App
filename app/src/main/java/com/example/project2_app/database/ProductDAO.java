@@ -62,5 +62,8 @@ public interface ProductDAO {
     @Query("UPDATE productTable SET isBookmarked = :isBookmarked WHERE productId = :productId")
     void updateBookmark(int productId, boolean isBookmarked);
 
+    @Query("SELECT * FROM " + InventoryManagementDatabase.PRODUCT_TABLE + " WHERE isBookmarked = 1")
+    List<Product> getBookmarkedItemsFuture();
+
 
 }

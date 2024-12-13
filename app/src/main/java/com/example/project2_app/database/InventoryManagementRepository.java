@@ -303,4 +303,8 @@ public class InventoryManagementRepository {
         });
     }
 
+    public List<Product> getBookmarkedProducts() {
+        return productDAO.getBookmarkedItemsFuture();
+    }
+
 }
