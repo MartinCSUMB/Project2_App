@@ -3,12 +3,20 @@ package com.example.project2_app.database;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.example.project2_app.database.entities.Product;
+
 import junit.framework.TestCase;
 
 
 
 public class ProductDAOTest extends TestCase {
 
+    private static final String TEST1 = "test1";
+
+    private static final String TEST2 = "test2";
+    Product testProd1 = new Product(1,TEST1,1,1,1,1);
+    Product testProd2 = new Product(2,TEST2,2,2,2,2);
+    Product testProd3;
     private static InventoryManagementDatabase db;
 
     ProductDAO pDao = null;
@@ -22,52 +30,13 @@ public class ProductDAOTest extends TestCase {
                 .allowMainThreadQueries()
                 .build();
     }
-
-    public void testGetAllProducts() {
+    public void tearDown() throws Exception {
+        db.close();
     }
 
-    public void testDeleteAll() {
-    }
+    public void testInsert() {
+        assertNull(testProd3);
+        pDao.insert(testProd1);
 
-    public void testGetProductByName() {
-    }
-
-    public void testGetProductByPartNumber() {
-    }
-
-    public void testGetProductByID() {
-    }
-
-    public void testGetProductByAisleID() {
-    }
-
-    public void testUpdateCount() {
-    }
-
-    public void testUpdateCost() {
-    }
-
-    public void testGetBookmarkedItems() {
-    }
-
-    public void testGetProductByNameAndStoreFuture() {
-    }
-
-    public void testUpdatePartNumberById() {
-    }
-
-    public void testUpdateProductAisleIdById() {
-    }
-
-    public void testGetAllProductsFuture() {
-    }
-
-    public void testGetProductListByAisleId() {
-    }
-
-    public void testGetProducts() {
-    }
-
-    public void testUpdateBookmark() {
     }
 }
