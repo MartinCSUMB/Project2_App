@@ -23,6 +23,7 @@ public class User {
         this.username = username;
         this.password = password;
         isAdmin = false;
+        storeSelected = null;
     }
 
 
@@ -31,12 +32,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(storeSelected, user.storeSelected);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, isAdmin);
+        return Objects.hash(id, username, password, isAdmin, storeSelected);
     }
 
     public int getId() {
