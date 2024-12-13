@@ -29,6 +29,11 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        findViewById(R.id.changeUsernameButton).setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, ChangeUsernameActivity.class);
+            startActivity(intent);
+        });
+
 
         findViewById(R.id.changePasswordButton).setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, ChangePasswordActivity.class);

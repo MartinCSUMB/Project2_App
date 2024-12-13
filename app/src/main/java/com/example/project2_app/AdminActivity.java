@@ -48,9 +48,14 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.manageUsersButton.setOnClickListener(v -> {
+            Intent intent = ManageUsersActivity.manageUsersIntentFactory(getApplicationContext());
+            startActivity(intent);
+        });
     }
 
     static Intent adminIntentFactory(Context context){
         return new Intent(context, AdminActivity.class);
     }
+
 }

@@ -310,5 +310,23 @@ public class InventoryManagementRepository {
             productDAO.updateBookmark(productId, isBookmarked);
         });
     }
+    public boolean doesUserNameExist(String username) {
+        User user = getUserByUserName(username).getValue();
+        return user != null;
+    }
+    public void deleteUser(User user) {
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() -> userDAO.delete(user));
+    }
+    public List<User> getAllUsers() {
+        Future<List<User>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(userDAO::getAllUsers);
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(AdminActivity.TAG, "Error fetching all users", e);
+            return null;
+        }
+    }
+
+
 
 }

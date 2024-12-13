@@ -1,5 +1,6 @@
 package com.example.project2_app.database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -38,6 +39,12 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, isAdmin, storeSelected);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return username; // Show only the username in the ListView
     }
 
     public int getId() {
