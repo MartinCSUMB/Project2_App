@@ -11,6 +11,7 @@ import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.Store;
 import com.example.project2_app.database.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -170,4 +171,144 @@ public class InventoryManagementRepository {
     public void updateUser(User user) {
         InventoryManagementDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
     }
+
+    //methods joe added
+    public List<Aisle> getAllAislesByStoreId(int storeId){
+        Future<List<Aisle>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Aisle>>(){
+                    @Override
+                    public List<Aisle> call() throws Exception{
+                        return aisleDAO.getAllAislesByStoreId(storeId);
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "problem getting list of products with aisle id");
+        }
+        return null;
+    }
+
+    public Aisle getAisleByNameFuture(String name) {
+        Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Aisle>(){
+                    @Override
+                    public Aisle call() throws Exception{
+                        return aisleDAO.getAisleByNameFuture(name) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
+    public Product getProductByNameAndStoreIdFuture(String name, int storeId) {
+        Future<Product> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Product>(){
+                    @Override
+                    public Product call() throws Exception{
+                        return productDAO.getProductByNameAndStoreFuture(name,storeId) ;
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
+    public void deleteProduct(Product product){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.delete(product);
+        });
+    }
+
+    public void  updatePartNumberById(int productId, int partNumber){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.updatePartNumberById(productId, partNumber);
+        });
+    }
+
+    public void  updateProductAisleIdById(int productId, int aisleID){
+        InventoryManagementDatabase.databaseWriteExecutor.execute(()->{
+            productDAO.updateProductAisleIdById(productId, aisleID);
+        });
+    }
+
+    public Aisle getAisleByNameAndStoreIdFuture(String name, int storeId) {
+        Future<Aisle> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<Aisle>(){
+                    @Override
+                    public Aisle call() throws Exception{
+                        return aisleDAO.getAisleByNameAndStoreIdFuture(name,storeId);
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "Problem getting name out of");
+        }
+        return null;
+    }
+
+    public List<Product> getAllProductsFuture() {
+        Future<ArrayList<Product>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Product>>() {
+                    @Override
+                    public ArrayList<Product> call() throws Exception {
+                        return (ArrayList<Product>) productDAO.getAllProductsFuture();
+                    }
+                });
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Aisle> getAllAislesListFuture() {
+        Future<ArrayList<Aisle>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Aisle>>() {
+                    @Override
+                    public ArrayList<Aisle> call() throws Exception {
+                        return (ArrayList<Aisle>) aisleDAO.getAllAislesListFuture();
+                    }
+                });
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Product> getProductListByAisleId(int aisleId){
+        Future<List<Product>> future = InventoryManagementDatabase.databaseWriteExecutor.submit(
+                new Callable<List<Product>>(){
+                    @Override
+                    public List<Product> call() throws Exception{
+                        return productDAO.getProductListByAisleId(aisleId);
+                    }                                                                                                                        }
+        );
+        try{
+            return future.get();
+        }catch (InterruptedException | ExecutionException e){
+            Log.d(AdminActivity.TAG, "problem getting list of products with aisle id");
+        }
+        return null;
+    }
+
+    //krithika
+
+    public void updateBookmark(int productId, boolean isBookmarked) {
+        InventoryManagementDatabase.databaseWriteExecutor.execute(() -> {
+            productDAO.updateBookmark(productId, isBookmarked);
+        });
+    }
+
 }
