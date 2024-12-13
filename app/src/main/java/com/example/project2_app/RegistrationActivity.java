@@ -23,7 +23,22 @@ public class RegistrationActivity extends AppCompatActivity {
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         repository = InventoryManagementRepository.getRepository(getApplication());
+
+        executor.execute(() -> {
+            repository = new InventoryManagementRepository(getApplication());
+            runOnUiThread(() -> {
+                Log.d("RegistrationActivity", "Repository initialized successfully");
+                // Continue setup if needed
+            });
+        });
+        binding.backArrow.setOnClickListener(v -> onBackPressed());
+        binding.returnToAdminMenuFromRegistrationButton.setOnClickListener(v -> {
+            Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+            startActivity(intent);
+        });
+
 
         binding.enterRegisterButton.setOnClickListener(v -> {
             String username = binding.usernameEditText.getText().toString().trim();

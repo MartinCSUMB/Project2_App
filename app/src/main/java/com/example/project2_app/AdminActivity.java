@@ -25,6 +25,8 @@ public class AdminActivity extends AppCompatActivity {
 
         repository = InventoryManagementRepository.getRepository(getApplication());
 
+        binding.backArrow.setOnClickListener(v -> finish());
+
         binding.manageItemsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,9 +50,19 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         binding.manageUsersButton.setOnClickListener(v -> {
             Intent intent = ManageUsersActivity.manageUsersIntentFactory(getApplicationContext());
             startActivity(intent);
+        });
+
+        binding.returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), -1);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 

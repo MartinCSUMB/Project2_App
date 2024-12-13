@@ -62,6 +62,7 @@ public class ManageAislesActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, storeSpinner);
         storeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         storeSpin.setAdapter(storeAdapter);
+        binding.backArrow.setOnClickListener(v -> onBackPressed());
 
         binding.storeSetButton.setOnClickListener(new View.OnClickListener() {
             @Override
