@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.example.project2_app.database.entities.Aisle;
 import com.example.project2_app.database.entities.Product;
 import com.example.project2_app.database.entities.Store;
+import com.example.project2_app.database.entities.User;
 
 
 import org.junit.After;
@@ -63,6 +64,18 @@ public class InventoryManagementDatabaseTestInserts {
         assertEquals(1, stores.size());
         assertEquals("123 Main St", stores.get(0).getStoreStreet());
     }
+
+    @Test
+    public void testInsertUser() {
+        User user = new User("admin1", "password123");
+        database.userDAO().insert(user);
+
+        List<User> users = database.userDAO().getAllUsers();
+        assertEquals(1, users.size());
+        assertEquals("admin1", users.get(0).getUsername());
+        assertEquals("password123", users.get(0).getPassword());
+    }
+
 
 
 
