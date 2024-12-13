@@ -316,4 +316,8 @@ public class InventoryManagementRepository {
     public List<Product> getProducts() {
         return products;
     }
+
+    public List<Product> getBookmarkedProducts() {
+        return productDAO.getBookmarkedItemsFuture();
+    }
 }

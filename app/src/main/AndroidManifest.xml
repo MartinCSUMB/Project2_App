@@ -39,6 +39,8 @@
         <activity
             android:name=".ManageAislesActivity"
             android:exported="false" />
+        <activity android:name=".BookmarkedItemActivity"
+            android:exported="false" />
         <activity
             android:name=".ManageItemsActivity"
             android:exported="false" />
