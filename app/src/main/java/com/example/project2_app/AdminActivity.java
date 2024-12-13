@@ -25,6 +25,8 @@ public class AdminActivity extends AppCompatActivity {
 
         repository = InventoryManagementRepository.getRepository(getApplication());
 
+        binding.backArrow.setOnClickListener(v -> finish());
+
         binding.manageItemsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

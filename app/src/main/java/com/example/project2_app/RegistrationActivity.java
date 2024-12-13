@@ -44,6 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 // Continue setup if needed
             });
         });
+        binding.backArrow.setOnClickListener(v -> onBackPressed());
         binding.returnToAdminMenuFromRegistrationButton.setOnClickListener(v -> {
             Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
             startActivity(intent);
