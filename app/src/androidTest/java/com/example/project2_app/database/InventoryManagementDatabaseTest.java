@@ -33,6 +33,7 @@ public class InventoryManagementDatabaseTest {
         database.close();
     }
 
+    //this test checks insert product
     @Test
     public void testInsertProduct() {
         Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
@@ -41,6 +42,7 @@ public class InventoryManagementDatabaseTest {
         assertEquals(1, products.size());
     }
 
+    //this test checks update product
     @Test
     public void testUpdateProduct() {
         Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
@@ -52,6 +54,7 @@ public class InventoryManagementDatabaseTest {
         assertEquals("Updated Product", updatedProduct.getName());
     }
 
+    //this test checks delete product
     @Test
     public void testDeleteProduct() {
         Product product = new Product(1, "Test Product", 10.0, 1234, 5, 1);
