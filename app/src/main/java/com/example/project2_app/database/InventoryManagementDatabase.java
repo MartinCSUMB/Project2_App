@@ -66,7 +66,7 @@ public abstract class InventoryManagementDatabase extends RoomDatabase {
                 pdao.deleteAll();
                 Product testProduct = new Product(1, "test", 1.0, 1234,3,1);
                 pdao.insert(testProduct);
-                Product testProduct2 = new Product(1,"toiler paper", 5.00, 2342990,1,1);
+                Product testProduct2 = new Product(1,"toilet paper", 5.00, 2342990,1,1);
                 pdao.insert(testProduct2);
 
                 AisleDAO adao = INSTANCE.aisleDAO();
