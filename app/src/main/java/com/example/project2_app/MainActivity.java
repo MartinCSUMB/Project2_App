@@ -10,9 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,15 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.project2_app.database.InventoryManagementRepository;
-import com.example.project2_app.database.StoreDAO;
 import com.example.project2_app.database.entities.Product;
-import com.example.project2_app.database.entities.Store;
 import com.example.project2_app.database.entities.User;
 import com.example.project2_app.databinding.ActivityMainBinding;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,10 +53,20 @@ public class MainActivity extends AppCompatActivity {
 
         repository = InventoryManagementRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
+
+        // Check for the password change message
+        String message = getIntent().getStringExtra("PASSWORD_CHANGE_MESSAGE");
+        if (message != null && !message.isEmpty()) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+
         if (loggedInUserId == -1) {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
+        updateSharedPreference();
+        toggleAdminButtonVisibility();
+
 
         binding.activity1Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,18 +88,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
 
     private void loginUser(Bundle savedInstanceState) {
         // Check shared preferences for logged-in user
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
-        if (sharedPreferences.contains(SHARED_PREFERENCE_USERID_VALUE)) {
-            loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE, LOGGED_OUT);
-        }
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        loggedInUserId = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
 
         // Check saved instance state for logged-in user
-        if (loggedInUserId == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)) {
-            loggedInUserId = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY, LOGGED_OUT);
+        if (loggedInUserId == LOGGED_OUT && savedInstanceState != null && savedInstanceState.containsKey(getString(R.string.preference_userId_key))) {
+            loggedInUserId = savedInstanceState.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
         }
 
         // Check intent for logged-in user
@@ -114,9 +115,19 @@ public class MainActivity extends AppCompatActivity {
         userObserver.observe(this, user -> {
             this.user = user;
             if (this.user != null) {
-                invalidateOptionsMenu();
-            } else {
-                logout();
+                if (this.user.getStoreSelected() == null || this.user.getStoreSelected().isEmpty()) {
+                    // Redirect only if no store is selected
+                    Intent intent = StoreActivity.storeIntentFactory(getApplicationContext());
+                    startActivity(intent);
+                    finish(); // Prevent returning to this activity
+                } else {
+                    // Store selected, update UI
+                    String welcomeMessage = user.isAdmin() ? "Welcome Admin: " + user.getUsername() : "Welcome User: " + user.getUsername();
+                    binding.welcomeTextView.setText(welcomeMessage + "\nStore: " + user.getStoreSelected());
+                }
+
+                // Handle Admin Menu Button visibility
+                toggleAdminButtonVisibility();
             }
         });
     }
@@ -125,11 +136,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("SAVED_INSTANCE_STATE_USERID_KEY", loggedInUserId);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREFERENCE_USERID_KEY", Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(MainActivity.SHARED_PREFERENCE_USERID_KEY, loggedInUserId);
-        sharedPrefEditor.apply();
+        updateSharedPreference();
     }
 
 
@@ -137,27 +144,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.logout_menu, menu);
+        inflater.inflate(R.menu.settings_menu, menu);
         return true;
     }
 
+
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.logoutMenuItem);
-        item.setVisible(true);
-        if (user==null){
-            return false;
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settingsMenuItem) {
+            // Navigate to SettingsActivity
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.logoutMenuItem) {
+            // Show logout dialog
+            showLogoutDialog();
+            return true;
         }
-        item.setTitle(user.getUsername());
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-                showLogoutDialog();
-                return false;
-            }
-        });
-        return true;
+        return super.onOptionsItemSelected(item);
     }
+
 
     private void showLogoutDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -183,14 +189,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(SHARED_PREFERENCE_USERID_KEY,LOGGED_OUT);
-        sharedPrefEditor.apply();
+
+        loggedInUserId = LOGGED_OUT;
+        updateSharedPreference();
 
         getIntent().putExtra(MAIN_ACTIVITY_USER_ID,LOGGED_OUT);
 
         startActivity(LoginActivity.loginIntentFactory(getApplication()));
+    }
+    private void updateSharedPreference(){
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+        sharedPrefEditor.putInt(getString(R.string.preference_userId_key), loggedInUserId);
+        sharedPrefEditor.apply();
     }
 
     private void loginStore(String store) {
@@ -201,6 +212,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
         return intent;
+    }
+    private void toggleAdminButtonVisibility() {
+        if (user != null && user.isAdmin()) {
+            Log.d("AdminButtonVisibility", "Button set to VISIBLE");
+            binding.adminMenuButton.setVisibility(View.VISIBLE);
+        } else {
+            Log.d("AdminButtonVisibility", "Button set to GONE");
+            binding.adminMenuButton.setVisibility(View.GONE);
+        }
     }
 
 }

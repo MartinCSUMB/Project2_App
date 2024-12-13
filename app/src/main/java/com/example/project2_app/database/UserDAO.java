@@ -35,4 +35,7 @@ public interface UserDAO {
     LiveData<User> getUserByUserName(String username);
     @Query("SELECT * FROM " + InventoryManagementDatabase.USER_TABLE + " WHERE id == :userId")
     LiveData<User> getUserByUserId(int userId);
+
+    @Query("UPDATE " + InventoryManagementDatabase.USER_TABLE + " SET storeSelected = :storeSelected WHERE id = :userId")
+    void updateStoreSelected(int userId, String storeSelected);
 }
