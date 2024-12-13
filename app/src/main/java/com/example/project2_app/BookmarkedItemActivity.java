@@ -45,7 +45,7 @@ public class BookmarkedItemActivity extends AppCompatActivity {
     private void displayBookmarkedItems(List<Product> bookmarkedProducts) {
         StringBuilder sb = new StringBuilder();
 
-        //need to test this out
+        //ok it works
         if (bookmarkedProducts.isEmpty()) {
             sb.append("No bookmarked items.");
         } else {
