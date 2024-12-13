@@ -37,6 +37,12 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.bookmarkedButton.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchActivity.this, BookmarkedItemActivity.class);
+            startActivity(intent);
+        });
+
 //        binding.returnToMainButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
