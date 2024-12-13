@@ -8,6 +8,7 @@ import androidx.test.core.app.ApplicationProvider;
 import junit.framework.TestCase;
 
 public class SearchActivityTest extends TestCase {
+    //Test to check intent
 
     Context context = null;
     Intent intent = null;
